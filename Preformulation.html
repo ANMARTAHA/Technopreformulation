@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Smart — Preformulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF0E9;
+    --surface:#FFFFFF;
+    --ink:#1B2430;
+    --ink-soft:#57616F;
+    --accent:#1F6F5C;
+    --accent-dark:#164F42;
+    --accent-2:#B6862C;
+    --line:#D9DBCD;
+    --line-soft:#E6E7DD;
+    --wrong:#A6432F;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:0.2px;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;}
+
+  /* ===== layout ===== */
+  .shell{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    min-height:100vh;
+  }
+  .side{
+    background:var(--accent-dark);
+    color:#EFEFE6;
+    padding:28px 22px;
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    height:100vh;
+  }
+  .brand{
+    margin-bottom:6px;
+  }
+  .brand h1{
+    font-size:1.5rem;
+    color:#fff;
+    line-height:1.15;
+  }
+  .brand .sub{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;
+    letter-spacing:0.5px;
+    color:#B9CFC6;
+    margin-top:8px;
+    line-height:1.5;
+  }
+  .divider{
+    height:1px;
+    background:rgba(255,255,255,0.15);
+    margin:22px 0;
+  }
+  nav.tabs{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  nav.tabs button{
+    all:unset;
+    cursor:pointer;
+    padding:11px 12px;
+    border-radius:var(--radius);
+    font-size:0.92rem;
+    color:#DCE6DF;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    transition:background .15s ease, color .15s ease;
+  }
+  nav.tabs button .num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:#8FAA9D;
+  }
+  nav.tabs button:hover{
+    background:rgba(255,255,255,0.06);
+  }
+  nav.tabs button.active{
+    background:#EFEFE6;
+    color:var(--accent-dark);
+    font-weight:600;
+  }
+  nav.tabs button.active .num{color:var(--accent);}
+
+  .side-foot{
+    margin-top:auto;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.15);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.66rem;
+    color:#93A79B;
+    line-height:1.6;
+  }
+
+  main{
+    padding:40px 52px 90px;
+    max-width:1080px;
+  }
+  .panel{display:none;}
+  .panel.active{display:block; animation:rise .35s ease;}
+  @keyframes rise{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .panel-head{
+    margin-bottom:30px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+  .panel-head h2{font-size:1.9rem;}
+  .panel-head p{
+    color:var(--ink-soft);
+    margin-top:8px;
+    max-width:62ch;
+    font-size:0.95rem;
+    line-height:1.55;
+  }
+
+  /* ===== overview ===== */
+  .law-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .law{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--accent);
+    padding:18px 20px;
+  }
+  .law h4{font-size:0.98rem; margin-bottom:8px;}
+  .law p{margin:0; font-size:0.87rem; line-height:1.55; color:var(--ink-soft);}
+  .law .tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.62rem;
+    color:var(--accent);
+    background:#E3EEE9;
+    padding:2px 7px;
+    margin-bottom:9px;
+    letter-spacing:.4px;
+  }
+  .eq-strip{
+    margin-top:26px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    padding:20px 22px;
+  }
+  .eq-strip h4{font-size:0.95rem; margin-bottom:14px;}
+  .eq-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:9px 0;
+    border-top:1px dashed var(--line-soft);
+    font-size:0.85rem;
+  }
+  .eq-row:first-of-type{border-top:none;}
+  .eq-row .name{color:var(--ink-soft);}
+  .eq-row .formula{font-family:'IBM Plex Mono',monospace; color:var(--accent-dark); font-weight:500;}
+
+  /* ===== diagrams ===== */
+  .diag-block{
+    background:var(--surface);
+    border:1px solid var(--line);
+    padding:22px 24px;
+    margin-bottom:22px;
+  }
+  .diag-block h4{font-size:1.02rem; margin-bottom:4px;}
+  .diag-block .hint{font-size:0.78rem; color:var(--ink-soft); margin-bottom:14px;}
+  table.itab{width:100%; border-collapse:collapse; font-size:0.85rem;}
+  table.itab th{
+    text-align:left; font-family:'IBM Plex Mono',monospace; font-size:0.68rem;
+    letter-spacing:.3px; color:var(--ink-soft); padding:8px 10px; border-bottom:1px solid var(--line);
+  }
+  table.itab td{padding:10px 10px; border-bottom:1px solid var(--line-soft); vertical-align:top;}
+  table.itab tr.row{cursor:pointer; transition:background .12s ease;}
+  table.itab tr.row:hover{background:#F3F5EE;}
+  table.itab tr.row.open{background:#E3EEE9;}
+  tr.detail td{
+    background:#FBFAF5; font-size:0.83rem; color:var(--ink-soft); padding:12px 14px; line-height:1.55;
+    border-bottom:1px solid var(--line-soft);
+  }
+  tr.detail{display:none;}
+  tr.detail.show{display:table-row;}
+
+  .calc{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:26px;
+    align-items:start;
+  }
+  .calc .field{margin-bottom:14px;}
+  .calc label{display:block; font-size:0.76rem; color:var(--ink-soft); margin-bottom:5px; font-family:'IBM Plex Mono',monospace;}
+  .calc input[type=number]{
+    width:100%; padding:8px 10px; border:1px solid var(--line); background:#FBFAF5;
+    font-family:'IBM Plex Mono',monospace; font-size:0.9rem;
+  }
+  .calc input[type=range]{width:100%;}
+  .toggle-row{display:flex; gap:8px; margin-bottom:16px;}
+  .toggle-row button{
+    all:unset; cursor:pointer; padding:7px 14px; font-size:0.78rem; border:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .toggle-row button.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .result-box{
+    background:#F3F5EE; border:1px solid var(--line); padding:18px; text-align:center;
+  }
+  .result-box .big{font-family:'Spectral',serif; font-size:2.4rem; color:var(--accent-dark); font-weight:600;}
+  .result-box .small{font-size:0.76rem; color:var(--ink-soft); margin-top:4px; font-family:'IBM Plex Mono',monospace;}
+  .bar-wrap{height:26px; width:100%; background:#E2E4D8; margin-top:14px; display:flex; overflow:hidden;}
+  .bar-wrap .ion{background:var(--accent-2); height:100%; transition:width .2s ease;}
+  .bar-wrap .un{background:var(--accent); height:100%; transition:width .2s ease;}
+  .bar-legend{display:flex; justify-content:space-between; font-size:0.7rem; color:var(--ink-soft); margin-top:6px; font-family:'IBM Plex Mono',monospace;}
+
+  svg.chart{width:100%; height:auto; display:block;}
+  .chart-buttons{display:flex; gap:10px; margin-bottom:14px;}
+  .chart-buttons button{
+    all:unset; cursor:pointer; padding:6px 13px; font-size:0.76rem; border:1px solid var(--line); font-family:'IBM Plex Mono',monospace;
+  }
+  .chart-buttons button.on-endo{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .chart-buttons button.on-exo{background:var(--wrong); color:#fff; border-color:var(--wrong);}
+
+  /* ===== mini map ===== */
+  .map-wrap{
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:26px;
+  }
+  .map-nodes{display:flex; flex-wrap:wrap; gap:9px; align-content:flex-start;}
+  .node-btn{
+    all:unset; cursor:pointer;
+    padding:9px 14px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    font-size:0.82rem;
+    color:var(--ink);
+    transition:all .12s ease;
+  }
+  .node-btn:hover{border-color:var(--accent); color:var(--accent-dark);}
+  .node-btn.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .map-display{
+    background:var(--surface); border:1px solid var(--line); padding:24px;
+    min-height:260px; position:sticky; top:40px; align-self:start;
+  }
+  .map-display h4{font-size:1.05rem; color:var(--accent-dark); margin-bottom:12px;}
+  .map-display p{font-size:0.88rem; line-height:1.65; color:var(--ink-soft); margin:0;}
+  .map-display .placeholder{color:#A3A99A; font-style:italic; font-size:0.85rem;}
+
+  /* ===== difficulty selector ===== */
+  .level-row{display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;}
+  .level-btn{
+    all:unset; cursor:pointer; padding:9px 16px; font-size:0.78rem; border:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); background:var(--surface);
+    transition:all .12s ease;
+  }
+  .level-btn .lvl-count{display:block; font-size:0.65rem; color:#9AA48F; margin-top:2px;}
+  .level-btn:hover{border-color:var(--accent);}
+  .level-btn.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .level-btn.on .lvl-count{color:#DDEFE7;}
+
+  /* ===== flash cards ===== */
+  .fc-toolbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;}
+  .fc-toolbar .count{font-family:'IBM Plex Mono',monospace; font-size:0.76rem; color:var(--ink-soft);}
+  .fc-toolbar button{
+    all:unset; cursor:pointer; padding:8px 16px; background:var(--accent); color:#fff; font-size:0.78rem;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .fc-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;}
+  .fc-card{
+    perspective:1000px; height:150px; cursor:pointer;
+  }
+  .fc-inner{
+    position:relative; width:100%; height:100%; transition:transform .5s;
+    transform-style:preserve-3d;
+  }
+  .fc-card.flip .fc-inner{transform:rotateY(180deg);}
+  .fc-face{
+    position:absolute; inset:0; backface-visibility:hidden;
+    border:1px solid var(--line); padding:16px; display:flex; align-items:center;
+    font-size:0.82rem; line-height:1.45; overflow-y:auto; overflow-x:hidden;
+    width:100%; box-sizing:border-box;
+  }
+  .fc-text{
+    width:100%; min-width:0;
+    word-wrap:break-word; overflow-wrap:break-word; word-break:break-word;
+    hyphens:auto;
+  }
+  .fc-front{background:var(--surface); color:var(--ink);}
+  .fc-front::before{
+    content:"Q"; position:absolute; top:8px; left:10px; font-family:'IBM Plex Mono',monospace;
+    font-size:0.65rem; color:var(--accent);
+  }
+  .fc-back{background:var(--accent); color:#fff; transform:rotateY(180deg);}
+  .fc-back::before{
+    content:"A"; position:absolute; top:8px; left:10px; font-family:'IBM Plex Mono',monospace;
+    font-size:0.65rem; color:#DDEFE7;
+  }
+
+  /* ===== quiz ===== */
+  .quiz-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+  .quiz-top .score{font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--ink-soft);}
+  .progress-track{height:5px; background:var(--line-soft); margin-bottom:26px;}
+  .progress-fill{height:100%; background:var(--accent); width:0%; transition:width .25s ease;}
+  .q-card{background:var(--surface); border:1px solid var(--line); padding:26px 28px;}
+  .q-card .q-num{font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--accent); margin-bottom:8px;}
+  .q-card h4{font-size:1.05rem; line-height:1.45; margin-bottom:20px; font-weight:500; font-family:'Inter',sans-serif;}
+  .opt{
+    display:block; width:100%; text-align:left; all:unset; cursor:pointer;
+    padding:12px 14px; border:1px solid var(--line); margin-bottom:9px; font-size:0.87rem;
+    transition:all .12s ease;
+  }
+  .opt:hover{border-color:var(--accent);}
+  .opt.correct{background:#E3EEE9; border-color:var(--accent); color:var(--accent-dark); font-weight:600;}
+  .opt.incorrect{background:#F3E4E0; border-color:var(--wrong); color:var(--wrong);}
+  .opt[disabled]{cursor:default;}
+  .quiz-nav{display:flex; justify-content:space-between; margin-top:20px;}
+  .quiz-nav button{
+    all:unset; cursor:pointer; padding:9px 18px; font-size:0.8rem; font-family:'IBM Plex Mono',monospace;
+    border:1px solid var(--line);
+  }
+  .quiz-nav button.primary{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .quiz-nav button[disabled]{opacity:.35; cursor:default;}
+  .quiz-done{text-align:center; padding:50px 20px;}
+  .quiz-done .score-big{font-family:'Spectral',serif; font-size:3rem; color:var(--accent-dark);}
+
+  @media(max-width:880px){
+    .shell{grid-template-columns:1fr;}
+    .side{position:relative; height:auto; flex-direction:row; align-items:center; flex-wrap:wrap; padding:16px 18px;}
+    .brand{margin-bottom:0; margin-right:auto;}
+    .divider{display:none;}
+    nav.tabs{flex-direction:row; flex-wrap:wrap;}
+    .side-foot{display:none;}
+    main{padding:26px 18px 70px;}
+    .law-grid{grid-template-columns:1fr;}
+    .calc{grid-template-columns:1fr;}
+    .map-wrap{grid-template-columns:1fr;}
+    .fc-grid{grid-template-columns:1fr 1fr;}
+    .map-display{position:static;}
+  }
+  @media(max-width:520px){
+    .fc-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="side">
+    <div class="brand">
+      <h1>Study<br>Smart</h1>
+      <div class="sub">PHARMACEUTICAL TECHNOLOGY I<br>PREFORMULATION · 3RD STAGE</div>
+    </div>
+    <div class="divider"></div>
+    <nav class="tabs" id="tabs">
+      <button data-target="overview" class="active"><span class="num">01</span> Overview</button>
+      <button data-target="diagrams"><span class="num">02</span> Interactive Diagrams</button>
+      <button data-target="minimap"><span class="num">03</span> Mini Map</button>
+      <button data-target="flashcards"><span class="num">04</span> Flash Cards</button>
+      <button data-target="quiz"><span class="num">05</span> Quiz Bank</button>
+    </nav>
+    <div class="side-foot">© Anmar Taha<br>All rights reserved.</div>
+  </aside>
+
+  <main>
+
+    <!-- ========== 1. OVERVIEW ========== -->
+    <section class="panel active" id="overview">
+      <div class="panel-head">
+        <h2>Overview</h2>
+        <p>The essential rules and ideas of preformulation — no lecture, just the core facts you need to remember.</p>
+      </div>
+
+      <div class="law-grid">
+        <div class="law"><span class="tag">DEFINITION</span><h4>What preformulation is</h4><p>Determining the intrinsic and derived physicochemical properties of a new chemical entity — the stage that must happen before proper formulation can begin.</p></div>
+        <div class="law"><span class="tag">PROPERTIES</span><h4>Intrinsic vs derived</h4><p>Intrinsic properties belong to the molecule and change only by chemical modification. Derived (bulk) properties come from intermolecular interactions and depend on solid-state form.</p></div>
+        <div class="law"><span class="tag">WORKFLOW</span><h4>Assay first</h4><p>No property can be measured without a validated assay — assay development is always the first preformulation step.</p></div>
+        <div class="law"><span class="tag">TOOLKIT</span><h4>The core five techniques</h4><p>UV spectrophotometry, HPLC, DSC, DVS and XRPD are enough to fully characterize most candidates. TLC and TGA are useful, not essential.</p></div>
+        <div class="law"><span class="tag">SOLUBILITY</span><h4>The 10 / 1 mg mL⁻¹ rule</h4><p>Above 10 mg/mL is preferable for an oral solid. Below 1 mg/mL, salt formation is indicated; if that fails, a novel dosage form is required.</p></div>
+        <div class="law"><span class="tag">SOLUBILITY</span><h4>Intrinsic solubility (S₀)</h4><p>The equilibrium solubility of the un-ionized form of an ionizable drug — the baseline value used in all pH-solubility calculations.</p></div>
+        <div class="law"><span class="tag">THERMODYNAMICS</span><h4>ΔHsol = ΔHf + ΔHmix</h4><p>Dissolution enthalpy is the sum of the enthalpy needed to break the crystal lattice (fusion) and the enthalpy of mixing with solvent.</p></div>
+        <div class="law"><span class="tag">TEMPERATURE</span><h4>Endothermic vs exothermic</h4><p>ΔHsol positive (endothermic): solubility rises with temperature. ΔHsol negative (exothermic): solubility falls with temperature.</p></div>
+        <div class="law"><span class="tag">SOLID STATE</span><h4>Polymorph solubility order</h4><p>Amorphous &gt; metastable polymorph &gt; stable polymorph, because stable forms have the highest melting point and ΔHf.</p></div>
+        <div class="law"><span class="tag">IONIZATION</span><h4>The ⅔ rule</h4><p>About two-thirds of marketed drugs ionize between pH 2 and pH 12 — acid/base behaviour is central to preformulation.</p></div>
+        <div class="law"><span class="tag">pH RULE</span><h4>±2 pH-unit rule</h4><p>2 units below pKa: a weak acid is essentially un-ionized. 2 units above pKa: it is essentially fully ionized (reverse for a base).</p></div>
+        <div class="law"><span class="tag">MEASUREMENT</span><h4>pKa from a titration</h4><p>Potentiometric titration; the point where pH = pKa is where the compound is exactly 50% ionized.</p></div>
+        <div class="law"><span class="tag">PARTITIONING</span><h4>Only the un-ionized form partitions</h4><p>Ionized species are too polar for the organic phase, so log P only strictly applies when the drug is un-ionized.</p></div>
+        <div class="law"><span class="tag">LOG P</span><h4>Sign tells the story</h4><p>P &gt; 1 (log P positive) = lipophilic. P &lt; 1 (log P negative) = hydrophilic. n-Octanol models the lipid bilayer.</p></div>
+      </div>
+
+      <div class="eq-strip">
+        <h4>Key formulas at a glance</h4>
+        <div class="eq-row"><span class="name">Dissolution enthalpy</span><span class="formula mono">ΔHsol = ΔHf + ΔHmix</span></div>
+        <div class="eq-row"><span class="name">Ideal solubility (van't Hoff)</span><span class="formula mono">ln x₂ = −ΔHf/RT + ΔHf/RTm</span></div>
+        <div class="eq-row"><span class="name">Total solubility — weak acid</span><span class="formula mono">St = S₀[1 + 10^(pH−pKa)]</span></div>
+        <div class="eq-row"><span class="name">Total solubility — weak base</span><span class="formula mono">St = S₀[1 + 10^(pKa−pH)]</span></div>
+        <div class="eq-row"><span class="name">pKa from solubility data</span><span class="formula mono">pKa = pH + log[(St−S₀)/S₀]</span></div>
+        <div class="eq-row"><span class="name">Partition coefficient</span><span class="formula mono">P(o/w) = Co / Cw</span></div>
+      </div>
+    </section>
+
+    <!-- ========== 2. DIAGRAMS ========== -->
+    <section class="panel" id="diagrams">
+      <div class="panel-head">
+        <h2>Interactive Diagrams</h2>
+        <p>Every table, chart and figure from the material — click, toggle, and compute to explore each relationship.</p>
+      </div>
+
+      <div class="diag-block">
+        <h4>Table 23.1 — Molecular properties and their assays</h4>
+        <div class="hint">Click a row to reveal the sample requirement.</div>
+        <table class="itab" id="tab1"></table>
+      </div>
+
+      <div class="diag-block">
+        <h4>Table 23.2 — Macroscopic (bulk) properties and techniques</h4>
+        <div class="hint">Click a row to reveal what the property tells a formulator.</div>
+        <table class="itab" id="tab2"></table>
+      </div>
+
+      <div class="diag-block">
+        <h4>Ionization calculator (Henderson–Hasselbalch)</h4>
+        <div class="hint">Move the sliders to see how pH relative to pKa changes the ionized fraction.</div>
+        <div class="calc">
+          <div>
+            <div class="toggle-row" id="acidBaseToggle">
+              <button data-mode="acid" class="on">Weak acid</button>
+              <button data-mode="base">Weak base</button>
+            </div>
+            <div class="field">
+              <label>pKa: <span id="pkaVal">4.8</span></label>
+              <input type="range" id="pkaSlider" min="1" max="12" step="0.1" value="4.8">
+            </div>
+            <div class="field">
+              <label>pH: <span id="phVal">6.0</span></label>
+              <input type="range" id="phSlider" min="1" max="12" step="0.1" value="6.0">
+            </div>
+          </div>
+          <div>
+            <div class="result-box">
+              <div class="big" id="ionResult">—</div>
+              <div class="small">PERCENT IONIZED</div>
+            </div>
+            <div class="bar-wrap"><div class="ion" id="ionBar" style="width:0%"></div><div class="un" id="unBar" style="width:0%"></div></div>
+            <div class="bar-legend"><span>Ionized</span><span>Un-ionized</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="diag-block">
+        <h4>Solubility vs. temperature</h4>
+        <div class="hint">Toggle to compare an endothermic and an exothermic heat of solution.</div>
+        <div class="chart-buttons">
+          <button id="btnEndo" class="on-endo on">ΔHsol positive (endothermic)</button>
+          <button id="btnExo" class="on-exo">ΔHsol negative (exothermic)</button>
+        </div>
+        <svg class="chart" id="tempChart" viewBox="0 0 560 260"></svg>
+      </div>
+
+      <div class="diag-block">
+        <h4>Partition coefficient visualizer</h4>
+        <div class="hint">Drag to set log P and watch the drug distribute between the octanol and water phases.</div>
+        <div class="calc">
+          <div>
+            <div class="field">
+              <label>log P: <span id="logpVal">0.0</span></label>
+              <input type="range" id="logpSlider" min="-3" max="3" step="0.1" value="0">
+            </div>
+            <p style="font-size:0.8rem; color:var(--ink-soft); line-height:1.5;">Positive log P → lipophilic (favours octanol). Negative log P → hydrophilic (favours water).</p>
+          </div>
+          <svg class="chart" id="partitionSvg" viewBox="0 0 300 180"></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3. MINI MAP ========== -->
+    <section class="panel" id="minimap">
+      <div class="panel-head">
+        <h2>Mini Map</h2>
+        <p>Click any topic to open its explanation in the reading panel on the right.</p>
+      </div>
+      <div class="map-wrap">
+        <div class="map-nodes" id="mapNodes"></div>
+        <div class="map-display" id="mapDisplay">
+          <div class="placeholder">Select a topic to read its explanation here.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 4. FLASH CARDS ========== -->
+    <section class="panel" id="flashcards">
+      <div class="panel-head">
+        <h2>Flash Cards</h2>
+        <p>Tap a card to flip between question and answer. Pick a difficulty level to change the deck.</p>
+      </div>
+      <div class="level-row" id="fcLevelRow">
+        <button class="level-btn on" data-level="easy">Level 1 · Easy<span class="lvl-count">60 cards</span></button>
+        <button class="level-btn" data-level="medium">Level 2 · Medium<span class="lvl-count">50 cards</span></button>
+        <button class="level-btn" data-level="hard">Level 3 · Hard<span class="lvl-count">40 cards</span></button>
+      </div>
+      <div class="fc-toolbar">
+        <span class="count" id="fcCount"></span>
+        <button id="fcShuffle">Shuffle deck</button>
+      </div>
+      <div class="fc-grid" id="fcGrid"></div>
+    </section>
+
+    <!-- ========== 5. QUIZ BANK ========== -->
+    <section class="panel" id="quiz">
+      <div class="panel-head">
+        <h2>Quiz Bank</h2>
+        <p>Answer choices are shuffled every time — the correct option won't sit in the same place twice. Pick a difficulty level to start a fresh quiz.</p>
+      </div>
+      <div class="level-row" id="quizLevelRow">
+        <button class="level-btn on" data-level="easy">Level 1 · Easy<span class="lvl-count">60 questions</span></button>
+        <button class="level-btn" data-level="medium">Level 2 · Medium<span class="lvl-count">50 questions</span></button>
+        <button class="level-btn" data-level="hard">Level 3 · Hard<span class="lvl-count">40 questions</span></button>
+      </div>
+      <div class="quiz-top">
+        <span class="score" id="quizProgressText"></span>
+        <span class="score" id="quizScoreText">Score: 0</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div id="quizArea"></div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ============ NAV ============ */
+document.querySelectorAll('#tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).classList.add('active');
+  });
+});
+
+/* ============ TABLE 23.1 / 23.2 ============ */
+const t1 = [
+  {p:"Solubility (aqueous & nonaqueous)", a:"UV spectrophotometry", r:"Chromophore required", d:"Aqueous solubility is the first property determined — it decides whether salt formation or a special dosage form will be needed."},
+  {p:"pKa", a:"UV spectrophotometry, Potentiometric titration", r:"Acid or basic group required", d:"Defines how the drug ionizes across the GI pH range and hence how its solubility and log P change with pH."},
+  {p:"P⁰w / log P", a:"UV spectrophotometry, TLC, HPLC", r:"Chromophore required", d:"Describes lipophilicity — how the un-ionized drug distributes between water and a lipid-like phase (n-octanol)."},
+  {p:"Hygroscopicity", a:"DVS, TGA", r:"No particular requirement", d:"Measures moisture uptake, which affects powder flow, stability, and manufacturability."},
+  {p:"Stability (hydrolysis, photolysis, oxidation)", a:"HPLC, plus suitable storage conditions", r:"No particular requirement", d:"Establishes degradation pathways early, guiding packaging and storage-condition decisions."},
+];
+const t2 = [
+  {p:"Melting point", a:"DSC or melting point apparatus", d:"A higher melting point generally signals a more stable, less soluble crystal form."},
+  {p:"Enthalpy of fusion (→ ideal solubility)", a:"DSC", d:"Feeds directly into the van't Hoff ideal-solubility equation."},
+  {p:"Physical forms (polymorphs, pseudopolymorphs, amorphous)", a:"DSC, XRPD, microscopy", d:"Different solid forms of the same molecule can have very different solubility and stability."},
+  {p:"Particle shape, size distribution, morphology, rugosity, habit", a:"Microscopy, particle sizing, BET (surface area)", d:"Governs dissolution rate, flow, and content uniformity."},
+  {p:"Density (bulk, tapped, true)", a:"Tapping densitometer", d:"Used to predict powder flow and to size manufacturing equipment."},
+  {p:"Flow", a:"Angle of repose", d:"Poor flow causes weight and content-uniformity problems during tableting."},
+  {p:"Compressibility", a:"Carr's index, Hausner ratio", d:"Predicts how well a powder will compress into a robust tablet."},
+  {p:"Excipient compatibility", a:"HPLC, DSC", d:"Screens for chemical or physical interactions between drug and excipients before formulation begins."},
+];
+function buildTable(id, rows, hasReq){
+  const tbl = document.getElementById(id);
+  let head = "<tr><th>Property</th><th>Assay / Technique</th>" + (hasReq?"<th>Sample requirement</th>":"") + "</tr>";
+  let body = "";
+  rows.forEach((row,i)=>{
+    body += `<tr class="row" data-idx="${i}"><td>${row.p}</td><td>${row.a}</td>${hasReq?`<td>${row.r}</td>`:""}</tr>`;
+    body += `<tr class="detail" id="${id}-d${i}"><td colspan="${hasReq?3:2}">${row.d}</td></tr>`;
+  });
+  tbl.innerHTML = head + body;
+  tbl.querySelectorAll('tr.row').forEach(r=>{
+    r.addEventListener('click', ()=>{
+      const idx = r.dataset.idx;
+      const detail = document.getElementById(`${id}-d${idx}`);
+      const open = detail.classList.contains('show');
+      tbl.querySelectorAll('tr.detail').forEach(d=>d.classList.remove('show'));
+      tbl.querySelectorAll('tr.row').forEach(rr=>rr.classList.remove('open'));
+      if(!open){ detail.classList.add('show'); r.classList.add('open'); }
+    });
+  });
+}
+buildTable('tab1', t1, true);
+buildTable('tab2', t2, false);
+
+/* ============ IONIZATION CALCULATOR ============ */
+let mode = 'acid';
+const pkaSlider = document.getElementById('pkaSlider');
+const phSlider = document.getElementById('phSlider');
+const pkaVal = document.getElementById('pkaVal');
+const phVal = document.getElementById('phVal');
+const ionResult = document.getElementById('ionResult');
+const ionBar = document.getElementById('ionBar');
+const unBar = document.getElementById('unBar');
+
+document.querySelectorAll('#acidBaseToggle button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('#acidBaseToggle button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    mode = b.dataset.mode;
+    computeIon();
+  });
+});
+function computeIon(){
+  const pka = parseFloat(pkaSlider.value);
+  const ph = parseFloat(phSlider.value);
+  pkaVal.textContent = pka.toFixed(1);
+  phVal.textContent = ph.toFixed(1);
+  let pct;
+  if(mode === 'acid'){
+    const ratio = Math.pow(10, ph - pka);
+    pct = (ratio/(1+ratio))*100;
+  } else {
+    const ratio = Math.pow(10, pka - ph);
+    pct = (ratio/(1+ratio))*100;
+  }
+  ionResult.textContent = pct.toFixed(1) + '%';
+  ionBar.style.width = pct + '%';
+  unBar.style.width = (100-pct) + '%';
+}
+pkaSlider.addEventListener('input', computeIon);
+phSlider.addEventListener('input', computeIon);
+computeIon();
+
+/* ============ TEMPERATURE CHART ============ */
+const tempSvg = document.getElementById('tempChart');
+function drawTempChart(showEndo, showExo){
+  const w=560,h=260,pad=44;
+  let s = `<g font-family="IBM Plex Mono, monospace" font-size="10" fill="#57616F">`;
+  s += `<line x1="${pad}" y1="${h-pad}" x2="${w-20}" y2="${h-pad}" stroke="#D9DBCD"/>`;
+  s += `<line x1="${pad}" y1="20" x2="${pad}" y2="${h-pad}" stroke="#D9DBCD"/>`;
+  s += `<text x="${w/2-40}" y="${h-8}">1 / temperature (K⁻¹)</text>`;
+  s += `<text x="10" y="16" transform="rotate(0)">ln x₂</text>`;
+  s += `</g>`;
+  if(showExo){
+    s += `<line x1="${pad}" y1="130" x2="${w-30}" y2="60" stroke="#A6432F" stroke-width="2.5"/>`;
+    s += `<text x="${w-160}" y="55" fill="#A6432F" font-family="IBM Plex Mono, monospace" font-size="11">ΔHsol negative (exothermic)</text>`;
+  }
+  if(showEndo){
+    s += `<line x1="${pad}" y1="90" x2="${w-30}" y2="200" stroke="#1F6F5C" stroke-width="2.5"/>`;
+    s += `<text x="${w-230}" y="215" fill="#1F6F5C" font-family="IBM Plex Mono, monospace" font-size="11">ΔHsol positive (endothermic)</text>`;
+  }
+  tempSvg.innerHTML = s;
+}
+const btnEndo = document.getElementById('btnEndo');
+const btnExo = document.getElementById('btnExo');
+let showEndo = true, showExo = false;
+btnEndo.addEventListener('click', ()=>{ showEndo=!showEndo; btnEndo.classList.toggle('on'); drawTempChart(showEndo,showExo); });
+btnExo.addEventListener('click', ()=>{ showExo=!showExo; btnExo.classList.toggle('on'); drawTempChart(showEndo,showExo); });
+drawTempChart(showEndo, showExo);
+
+/* ============ PARTITION VISUALIZER ============ */
+const logpSlider = document.getElementById('logpSlider');
+const logpVal = document.getElementById('logpVal');
+const partitionSvg = document.getElementById('partitionSvg');
+function drawPartition(){
+  const lp = parseFloat(logpSlider.value);
+  logpVal.textContent = lp.toFixed(1);
+  const p = Math.pow(10, lp);
+  const octFrac = p/(1+p);
+  const octH = octFrac*140;
+  const watH = 140-octH;
+  let s = `<g font-family="IBM Plex Mono, monospace" font-size="11" fill="#57616F">`;
+  s += `<rect x="40" y="${20+ (140-octH)}" width="90" height="${octH}" fill="#B6862C"/>`;
+  s += `<rect x="40" y="20" width="90" height="${140-octH}" fill="#EEE7D4" stroke="#D9DBCD"/>`;
+  s += `<text x="55" y="175">n-octanol</text>`;
+  s += `<rect x="170" y="${20+(140-watH)}" width="90" height="${watH}" fill="#1F6F5C"/>`;
+  s += `<rect x="170" y="20" width="90" height="${140-watH}" fill="#EEF0E9" stroke="#D9DBCD"/>`;
+  s += `<text x="185" y="175">water</text>`;
+  s += `</g>`;
+  partitionSvg.innerHTML = s;
+}
+logpSlider.addEventListener('input', drawPartition);
+drawPartition();
+
+/* ============ MINI MAP ============ */
+const mapTopics = [
+  {t:"Preformulation", x:"The determination of a new chemical entity's intrinsic and derived physicochemical properties, undertaken before formal formulation begins."},
+  {t:"Formulation", x:"The process of developing a selected drug candidate into a finished drug product."},
+  {t:"Intrinsic properties", x:"Properties inherent to the molecule itself (e.g. solubility, pKa, log P) — changeable only by altering the chemical structure."},
+  {t:"Derived properties", x:"Bulk/macroscopic properties arising from intermolecular interactions — affected by solid-state form, particle shape and environment (e.g. density, flow, melting point)."},
+  {t:"Assay development", x:"The mandatory first step of preformulation: no physicochemical property can be measured without a validated assay."},
+  {t:"Core five techniques", x:"UV spectrophotometry, HPLC, DSC, DVS, and XRPD are sufficient for full preformulation characterization; TLC and TGA add supporting data."},
+  {t:"Aqueous solubility rule", x:"Solubility above 10 mg/mL is preferable for an oral solid dosage form; below 1 mg/mL, salt formation is indicated, and if that fails, a novel dosage form is required."},
+  {t:"Equilibrium solubility", x:"The drug concentration in a saturated solution at equilibrium with excess solid."},
+  {t:"Intrinsic solubility (S₀)", x:"The equilibrium solubility of the un-ionized form of an ionizable drug."},
+  {t:"Dissolution mechanism", x:"Solid-solid bonds and solvent-solvent bonds break, and are replaced by solute-solvent bonds — the drug becomes solvated."},
+  {t:"Enthalpy of dissolution", x:"ΔHsol = ΔHf + ΔHmix — the sum of the enthalpy of fusion (breaking the crystal lattice) and enthalpy of mixing (forming solute-solvent bonds)."},
+  {t:"Ideal dissolution", x:"Occurs when ΔHmix = 0, i.e. solute-solvent and solvent-solvent bond energies are equal."},
+  {t:"van't Hoff ideal solubility", x:"ln x₂ = −ΔHf/RT + ΔHf/RTm, where Tm is the pure drug's melting temperature, T is the experimental temperature, and x₂ is the saturated mole-fraction solubility."},
+  {t:"Aspirin worked example", x:"Tm = 137 °C, ΔHf = 29.80 kJ/mol → the ideal mole-fraction solubility of aspirin at 25 °C works out to approximately x₂ ≈ 0.0375."},
+  {t:"Endothermic solutions", x:"ΔHsol positive: solubility increases as temperature increases."},
+  {t:"Exothermic solutions", x:"ΔHsol negative: solubility decreases as temperature increases."},
+  {t:"Stable polymorph", x:"Usually has the highest melting point and greatest ΔHf, and therefore the lowest solubility of the solid forms."},
+  {t:"Metastable polymorph", x:"Lower melting point and lower ΔHf than the stable form, giving greater solubility."},
+  {t:"Amorphous form", x:"Has no melting point at all, so it shows the greatest solubility of any solid form."},
+  {t:"Ionization prevalence", x:"About two-thirds of marketed drugs ionize somewhere between pH 2 and pH 12."},
+  {t:"±2 pH-unit rule", x:"2 pH units below the pKa, a weak acid is essentially completely un-ionized; 2 units above, it is virtually fully ionized (reversed for a weak base)."},
+  {t:"Total solubility — weak acid", x:"St = S₀[1 + 10^(pH−pKa)]"},
+  {t:"Total solubility — weak base", x:"St = S₀[1 + 10^(pKa−pH)]"},
+  {t:"pKa from solubility data", x:"pKa = pH + log[(St − S₀)/S₀], derived by substituting solubility terms into the Henderson–Hasselbalch equation."},
+  {t:"Chlordiazepoxide worked example", x:"S₀ = 2 mg/mL; at pH 4, St = 14.6 mg/mL gives pKa ≈ 4.80; at pH 6, St = 2.13 mg/mL gives pKa ≈ 4.81 — matching the literature value of 4.8."},
+  {t:"pKa measurement", x:"Usually a potentiometric pH titration; the point where pH = pKa corresponds to 50% ionization. Conductivity and spectroscopy are alternative methods."},
+  {t:"Partition coefficient", x:"P = C₁/C₂ — the constant ratio of a solute's concentration between two immiscible solvents at equilibrium."},
+  {t:"Octanol-water partition coefficient", x:"P(o/w) = Co/Cw — n-octanol is used to model the short-chain hydrocarbons of biological lipid bilayers."},
+  {t:"Interpreting log P", x:"P > 1 (log P positive) → lipophilic; P < 1 (log P negative) → hydrophilic. Log P is used because raw P values for hydrophilic drugs are very small."},
+  {t:"Un-ionized species only", x:"The partition coefficient equation strictly applies only when the drug cannot ionize, or when the aqueous pH keeps it completely un-ionized — ionized species are too polar for the organic phase."},
+  {t:"Shake-flask method", x:"Drug dissolved in water is mixed with an equal volume of n-octanol, shaken (~30 min), separated (~5 min), then the remaining aqueous concentration is measured. Drawbacks: large volumes and time needed to reach equilibrium."},
+  {t:"Chromatographic methods", x:"Normal-phase: polar stationary phase, nonpolar mobile phase. Reverse-phase: nonpolar stationary phase, polar mobile phase. Retention reflects the analyte's lipophilicity or hydrophilicity."},
+];
+const mapNodesEl = document.getElementById('mapNodes');
+const mapDisplayEl = document.getElementById('mapDisplay');
+mapTopics.forEach((topic, i)=>{
+  const b = document.createElement('button');
+  b.className = 'node-btn';
+  b.textContent = topic.t;
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.node-btn').forEach(n=>n.classList.remove('active'));
+    b.classList.add('active');
+    mapDisplayEl.innerHTML = `<h4>${topic.t}</h4><p>${topic.x}</p>`;
+  });
+  mapNodesEl.appendChild(b);
+});
+
+/* ============ FLASH CARDS ============ */
+const flashcardsEasy = [
+  {q:"What is preformulation?",a:"The determination of a new chemical entity's intrinsic and derived physicochemical properties, before formulation begins."},
+  {q:"What is formulation?",a:"The process of developing a drug candidate into a drug product."},
+  {q:"How many drug candidates are typically developed into a final drug product?",a:"Ultimately only one (at best)."},
+  {q:"What are intrinsic properties?",a:"Properties inherent to the molecule; changeable only by chemical modification."},
+  {q:"What are derived (bulk) properties?",a:"Properties resulting from intermolecular interactions; affected by solid-state form, shape, and environment."},
+  {q:"Give two examples of intrinsic properties.",a:"Solubility and pKa (also log P)."},
+  {q:"Give two examples of derived properties.",a:"Melting point and particle shape (also density, flow)."},
+  {q:"What is the first step of preformulation?",a:"Developing a suitable assay."},
+  {q:"Why must an assay be developed first?",a:"Because no physicochemical property can be measured without one."},
+  {q:"Name the five core techniques sufficient for full preformulation characterization.",a:"UV spectrophotometry, HPLC, DSC, DVS, and XRPD."},
+  {q:"Are TLC and TGA essential during early preformulation?",a:"No — they provide useful supporting data but are not essential."},
+  {q:"Which assay measures solubility, and what does it require?",a:"UV spectrophotometry; requires a chromophore."},
+  {q:"Which assays measure pKa?",a:"UV spectrophotometry or potentiometric titration."},
+  {q:"What sample requirement is needed to measure pKa?",a:"An acid or basic group."},
+  {q:"Which assays measure Pw0/log P?",a:"UV spectrophotometry, TLC, or HPLC."},
+  {q:"Which techniques measure hygroscopicity?",a:"DVS (dynamic vapour sorption) and TGA (thermogravimetric analysis)."},
+  {q:"How is stability (hydrolysis, photolysis, oxidation) assessed?",a:"By HPLC, plus suitable storage conditions."},
+  {q:"How is melting point determined?",a:"By DSC or a melting point apparatus."},
+  {q:"How is enthalpy of fusion determined?",a:"By DSC."},
+  {q:"Which techniques identify physical forms (polymorphs, pseudopolymorphs, amorphous)?",a:"DSC, XRPD, and microscopy."},
+  {q:"Which techniques characterize particle shape, size distribution, morphology, rugosity, and habit?",a:"Microscopy, particle sizing, and BET (surface area)."},
+  {q:"How is bulk, tapped, and true density measured?",a:"With a tapping densitometer."},
+  {q:"How is powder flow assessed?",a:"By angle of repose."},
+  {q:"How is compressibility assessed?",a:"By Carr's index and Hausner ratio."},
+  {q:"How is excipient compatibility assessed?",a:"By HPLC and DSC."},
+  {q:"Why is aqueous solubility called a critical attribute?",a:"Because no drug reaches its therapeutic target without first being in solution."},
+  {q:"Which physicochemical parameter is determined first in preformulation?",a:"Solubility."},
+  {q:"What solubility value is preferable for an oral solid dosage form?",a:"Greater than 10 mg/mL."},
+  {q:"What solubility value suggests salt formation should be considered?",a:"Less than 1 mg/mL."},
+  {q:"What option exists if salt formation cannot improve solubility?",a:"A novel dosage form."},
+  {q:"What is equilibrium solubility?",a:"The concentration of dissolved drug at equilibrium with excess solid; the solution is saturated."},
+  {q:"What is intrinsic solubility (S₀)?",a:"The equilibrium solubility of the un-ionized form of an ionizable drug."},
+  {q:"What bonds must break for dissolution to occur?",a:"Solid-solid bonds and solvent-solvent bonds."},
+  {q:"What are solute-solvent bonds also called?",a:"Solvation."},
+  {q:"Write the equation for enthalpy of dissolution.",a:"ΔHsol = ΔHf + ΔHmix."},
+  {q:"What does ΔHf represent?",a:"The enthalpy of fusion — the energy needed to melt (break solid-solid bonds in) the solid."},
+  {q:"What does ΔHmix represent?",a:"The enthalpy of mixing — from breaking solvent-solvent bonds and forming solute-solvent bonds."},
+  {q:"When is dissolution described as 'ideal'?",a:"When ΔHmix = 0."},
+  {q:"Write the integrated van't Hoff equation for ideal solubility.",a:"ln x₂ = −ΔHf/RT + ΔHf/RTm."},
+  {q:"In the van't Hoff equation, what does Tm represent?",a:"The melting temperature of the pure drug (in Kelvin)."},
+  {q:"In the van't Hoff equation, what does x₂ represent?",a:"The saturated concentration of drug in mole fraction units."},
+  {q:"What is aspirin's melting temperature, as given in the worked example?",a:"137 °C."},
+  {q:"What is aspirin's enthalpy of fusion, as given in the worked example?",a:"29.80 kJ/mol."},
+  {q:"If ΔHsol is positive, what type of process is dissolution?",a:"Endothermic."},
+  {q:"If dissolution is endothermic, what happens to solubility as temperature rises?",a:"Solubility increases."},
+  {q:"If ΔHsol is negative, what type of process is dissolution?",a:"Exothermic."},
+  {q:"If dissolution is exothermic, what happens to solubility as temperature rises?",a:"Solubility decreases."},
+  {q:"Which polymorph usually has the higher melting point: stable or metastable?",a:"The stable polymorph."},
+  {q:"Which polymorph usually has greater solubility: stable or metastable?",a:"The metastable polymorph."},
+  {q:"Why does the amorphous form have the greatest solubility?",a:"Because it has no melting point."},
+  {q:"About what fraction of marketed drugs ionize between pH 2 and pH 12?",a:"About two-thirds."},
+  {q:"What equations allow calculation of ionization extent as a function of pH?",a:"The Henderson-Hasselbalch equations."},
+  {q:"When is a weak acid essentially completely un-ionized?",a:"When pH is at least 2 units below its pKa."},
+  {q:"When is a weak acid virtually fully ionized?",a:"When pH is at least 2 units above its pKa."},
+  {q:"What is the total solubility equation for a weak acid?",a:"St = S₀[1 + 10^(pH−pKa)]."},
+  {q:"What is the total solubility equation for a weak base?",a:"St = S₀[1 + 10^(pKa−pH)]."},
+  {q:"How is pKa usually measured instrumentally?",a:"By potentiometric pH titration."},
+  {q:"At what point on a pH titration curve does pH equal pKa?",a:"When the compound is 50% ionized."},
+  {q:"Name two alternative methods for determining pKa.",a:"Conductivity and spectroscopy."},
+  {q:"What does the partition coefficient (P) describe?",a:"The equilibrium ratio of a solute's concentration between two immiscible solvents."},
+];
+const flashcardsMedium = [
+  {q:"Why can intrinsic properties only be changed by chemical modification, while derived properties change with the environment?",a:"Intrinsic properties belong to the molecule itself, whereas derived properties arise from intermolecular interactions that depend on solid-state form and surroundings."},
+  {q:"How do Table 23.1 and Table 23.2 differ in what they measure?",a:"Table 23.1 lists intrinsic molecular properties (solubility, pKa, log P, hygroscopicity, stability); Table 23.2 lists macroscopic/bulk properties from intermolecular interactions (melting point, particle properties, density, flow, compressibility, excipient compatibility)."},
+  {q:"Why do solubility and log P assays both require a chromophore?",a:"Because both are measured by UV spectrophotometry, which detects light absorbance."},
+  {q:"Why is aqueous solubility determined before other physicochemical parameters?",a:"Because no drug can reach its therapeutic target without first dissolving, making solubility the most fundamental preformulation property."},
+  {q:"A candidate has a solubility of 0.5 mg/mL. What preformulation strategy is indicated?",a:"Salt formation, since solubility is below 1 mg/mL; if that fails, a novel dosage form is required."},
+  {q:"What is the relationship between equilibrium solubility and intrinsic solubility for a non-ionizable drug?",a:"They are the same, since there is no ionized fraction to distinguish."},
+  {q:"Why does dissolution require an enthalpy input equal to the enthalpy of fusion, even though nothing is actually melting?",a:"Because the same solid-solid bonds broken during melting must also be broken during dissolution."},
+  {q:"How does the enthalpy of mixing differ from the enthalpy of fusion?",a:"Enthalpy of fusion accounts for breaking solid-solid bonds; enthalpy of mixing accounts for the additional energy change from breaking solvent-solvent bonds and forming solute-solvent bonds."},
+  {q:"Under what specific condition does ΔHmix equal zero?",a:"When the energy of the solute-solvent bond equals the energy of the solvent-solvent bond."},
+  {q:"Why does a higher melting point generally predict lower solubility, according to the van't Hoff relationship?",a:"A higher Tm makes the (1/Tm−1/T) term less negative, reducing ln x₂ and thus the ideal solubility."},
+  {q:"Why does the stable polymorph have the lowest solubility among solid forms of the same drug?",a:"Because it typically has the highest melting point and greatest enthalpy of fusion, both of which lower ideal solubility."},
+  {q:"Why might formulators deliberately select a metastable polymorph for a drug product?",a:"Because metastable forms have greater solubility, which can improve dissolution and bioavailability, despite reduced physical stability."},
+  {q:"Why is the amorphous form sometimes used to enhance bioavailability of poorly soluble drugs?",a:"Because it lacks a crystal lattice (no melting point), giving it the highest solubility of any solid form."},
+  {q:"A drug shows decreasing solubility as temperature rises. What does this imply about its heat of solution?",a:"The heat of solution is exothermic, so ΔHsol is negative."},
+  {q:"On the ln x₂ vs 1/T plot, how would you distinguish an endothermic from an exothermic drug?",a:"The endothermic (ΔHsol positive) line decreases as 1/T increases; the exothermic (ΔHsol negative) line increases as 1/T increases."},
+  {q:"Why is understanding acid/base behaviour important beyond just solubility manipulation?",a:"Because roughly two-thirds of marketed drugs ionize within pH 2–12, and ionizable groups also allow solubility manipulation through salt formation."},
+  {q:"A weakly acidic drug has pKa 5. At pH 3, is it mostly ionized or un-ionized?",a:"Mostly un-ionized, since pH is 2 units below pKa."},
+  {q:"A weakly basic drug has pKa 8. At pH 10, is it mostly ionized or un-ionized?",a:"Mostly un-ionized, since for a base, pH above pKa favors the un-ionized form."},
+  {q:"Why does total solubility (St) equal the sum of un-ionized and ionized solubility fractions?",a:"Because both the neutral and ionized species contribute to the total dissolved drug concentration at a given pH."},
+  {q:"How can measuring total solubility at two different pH values allow calculation of pKa?",a:"By substituting each (pH, St) pair into the rearranged Henderson-Hasselbalch solubility equation and solving for pKa, using the known intrinsic solubility So."},
+  {q:"In the chlordiazepoxide example, why do the pKa values calculated at pH 4 and pH 6 nearly agree?",a:"Because both data points lie on the same Henderson-Hasselbalch solubility curve defined by the drug's true pKa and So, confirming internal consistency."},
+  {q:"Why does pH = pKa correspond to 50% ionization on a titration curve?",a:"Because at that point, the concentrations of ionized and un-ionized species are equal, making their log ratio zero."},
+  {q:"Why is n-octanol chosen to model biological partitioning rather than a purely nonpolar solvent like hexane?",a:"Because n-octanol's structure mimics the short-chain hydrocarbon character of biological lipid bilayers more realistically."},
+  {q:"Why does a lipophilic drug have a partition coefficient greater than 1?",a:"Because it distributes preferentially into the octanol (lipid-like) phase rather than water."},
+  {q:"Why are log P values preferred over raw P values for reporting lipophilicity?",a:"Because hydrophilic drugs give very small P values that are hard to compare; log P converts these into convenient negative numbers, while lipophilic drugs get positive values."},
+  {q:"Why does the partition coefficient equation only strictly apply to un-ionized drug?",a:"Because ionized species are too polar to dissolve appreciably in the organic (octanol) phase."},
+  {q:"How can a formulator ensure a partition coefficient measurement is valid for an ionizable drug?",a:"By adjusting the aqueous phase pH so the drug remains completely un-ionized during the experiment."},
+  {q:"Why must the shake-flask method allow the mixture to shake for as long as 30 minutes?",a:"To maximize contact surface area between the two immiscible solvents so equilibrium partitioning can be reached."},
+  {q:"How is the concentration of drug in the octanol phase calculated in the shake-flask method?",a:"By subtracting the final aqueous concentration from the initial aqueous concentration (mass balance)."},
+  {q:"Why is the shake-flask method considered less convenient than chromatographic methods for measuring log P?",a:"Because it requires relatively large solvent volumes and sufficient time to reach equilibrium."},
+  {q:"Why can reverse-phase HPLC retention time be used to estimate log P?",a:"Because retention on a nonpolar stationary phase (with a polar mobile phase) depends on the analyte's relative lipophilicity, similar to octanol-water partitioning."},
+  {q:"What distinguishes normal-phase from reverse-phase chromatography in terms of polarity?",a:"In normal-phase, the stationary phase is polar and the mobile phase is nonpolar; in reverse-phase, this is reversed."},
+  {q:"Why does hygroscopicity matter during preformulation?",a:"Because moisture uptake affects powder flow, chemical stability, and manufacturability."},
+  {q:"Why is excipient compatibility tested using both HPLC and DSC?",a:"HPLC detects chemical degradation products from drug-excipient interaction, while DSC detects physical interactions such as shifts in melting behavior."},
+  {q:"Why does poor powder flow create manufacturing problems?",a:"Because it leads to inconsistent weight and content uniformity during tableting."},
+  {q:"What do Carr's index and Hausner ratio both assess, and from what raw data are they derived?",a:"Both assess compressibility, calculated from bulk and tapped density measurements."},
+  {q:"Why would a drug candidate's particle size distribution be measured alongside its BET surface area?",a:"Because both influence dissolution rate and powder behavior, with BET providing a more precise measure of surface area available for dissolution."},
+  {q:"If a drug candidate is highly hygroscopic, what preformulation techniques would most directly detect this?",a:"DVS (dynamic vapour sorption) and TGA (thermogravimetric analysis)."},
+  {q:"A drug has no measurable melting point under DSC. What solid-state form does this suggest, and what solubility consequence follows?",a:"It suggests the amorphous form, which would show the greatest solubility among possible solid forms."},
+  {q:"Why does the enthalpy of fusion value feed directly into predicting a drug's ideal solubility?",a:"Because ΔHf is a term in the van't Hoff ideal-solubility equation, directly linking crystal lattice energy to predicted solubility."},
+  {q:"Why is intrinsic solubility (So) the key baseline value in Henderson-Hasselbalch pH-solubility calculations?",a:"Because it represents the constant solubility of the un-ionized species, from which the pH-dependent ionized contribution is calculated."},
+  {q:"Why would a formulator need both the total solubility (St) and intrinsic solubility (So) to determine a drug's pKa experimentally?",a:"Because pKa is calculated from the ratio of ionized to un-ionized solubility fractions, which requires knowing both values at a given pH."},
+  {q:"Why does the shake-flask method's assumption of 'equal volumes' matter for interpreting results?",a:"Because the partition coefficient calculation assumes concentrations are compared on a consistent volume basis; unequal volumes would require correction."},
+  {q:"How would increasing a drug's melting point, while holding ΔHf constant, affect its predicted ideal solubility?",a:"It would decrease the ideal solubility, since a higher Tm makes the negative exponential term in the van't Hoff equation more negative."},
+  {q:"Why might two structurally similar drugs have very different aqueous solubilities despite similar ΔHf values?",a:"Because their melting points (Tm) may differ substantially, which strongly affects ideal solubility via the van't Hoff relationship."},
+  {q:"What does it mean, physically, for hygroscopicity or stability testing to have 'no particular sample requirement'?",a:"It means these assays do not depend on the molecule possessing a chromophore or ionizable group, unlike solubility, pKa, or log P assays."},
+  {q:"Why is stability testing (hydrolysis, photolysis, oxidation) paired with 'suitable storage conditions' rather than measured as a single value?",a:"Because degradation rates depend on environmental exposure, so controlled storage conditions are needed to generate meaningful, comparable stability data."},
+  {q:"Why does log P determination by shake-flask become unreliable for very lipophilic or very hydrophilic drugs?",a:"Because at extreme log P values, the concentration in one phase becomes too low to measure accurately, introducing large experimental error."},
+  {q:"Why is the sequential order of Table 23.1 (solubility, then pKa, then log P) logical for preformulation planning?",a:"Because solubility often depends on the ionization state, described by pKa, and log P calculations in turn require knowing the un-ionized form's behavior."},
+  {q:"How does a molecule's possession of an ionizable group create two separate strategic options for improving its solubility?",a:"It allows solubility manipulation through pH-dependent ionization behavior and through salt formation, giving formulators flexibility not available to non-ionizable drugs."},
+];
+const flashcardsHard = [
+  {q:"A drug has Tm = 200 °C and ΔHf = 25.0 kJ/mol. Calculate its ideal mole-fraction solubility (x₂) at 37 °C using the van't Hoff equation.",a:"x₂ ≈ 0.035 (ln x₂ = ΔHf/R × (1/Tm − 1/T) = 3007×(1/473.15 − 1/310.15) ≈ −3.34, so x₂ ≈ e⁻³·³⁴)."},
+  {q:"A drug has Tm = 150 °C and ΔHf = 20.0 kJ/mol. Calculate its ideal mole-fraction solubility at 25 °C.",a:"x₂ ≈ 0.092 (ln x₂ = 2405.6×(1/423.15 − 1/298.15) ≈ −2.38)."},
+  {q:"A weak acid has So = 5 mg/mL. At pH 3, St = 45 mg/mL. Calculate the pKa.",a:"pKa = pH + log[(St−So)/So] = 3 + log(40/5) = 3 + log(8) ≈ 3.90."},
+  {q:"A weak base has So = 1 mg/mL, pKa = 8, pH = 6. Calculate the total solubility St.",a:"St = So[1+10^(pKa−pH)] = 1×(1+10²) = 101 mg/mL."},
+  {q:"A weak acid has pKa = 5. At pH 7, what percentage of the drug is ionized?",a:"≈99.0% (ratio =10^(pH−pKa)=100; %ionized = 100/101×100 ≈ 99.0%)."},
+  {q:"A weak base has pKa = 9. At pH 7, what percentage of the drug is ionized?",a:"≈99.0% (ratio =10^(pKa−pH)=100; %ionized = 100/101×100 ≈ 99.0%)."},
+  {q:"A weakly acidic drug's pH-solubility profile shows St rising sharply above pH 6. What does this suggest about its pKa?",a:"The drug's pKa is likely near or below pH 6, since ionization (and hence solubility) increases substantially once pH exceeds pKa."},
+  {q:"Explain, in thermodynamic terms, why an amorphous solid dissolves faster and more extensively than its crystalline counterpart, even though both are chemically identical.",a:"The amorphous form has no crystal lattice to disrupt (no ΔHf/melting transition), so the energetic barrier to dissolution is lower, giving it higher effective solubility and dissolution rate."},
+  {q:"A weak base with pKa 7.4 is compared in the stomach (pH ~2) versus the intestine (pH ~7). How does its solubility/absorption profile differ?",a:"In the acidic stomach, the drug is almost fully ionized (high solubility, poor permeability); in the intestine, closer to its pKa, a larger un-ionized fraction exists (more lipophilic, better absorbed)."},
+  {q:"If ΔHmix were strongly negative (exothermic mixing) rather than zero, how would actual solubility compare to the 'ideal' solubility predicted by van't Hoff?",a:"Actual solubility would be higher than ideal, since ΔHsol = ΔHf + ΔHmix would be less positive than the ideal (ΔHmix=0) case, favoring dissolution."},
+  {q:"Why can't the simple partition coefficient (P = Co/Cw) describe the lipophilicity of a drug that is 90% ionized at physiological pH?",a:"Because P is defined for the un-ionized species only; at 90% ionization, most drug is too polar to partition into the organic phase, so the apparent ratio would misrepresent true lipophilicity."},
+  {q:"A drug has log P = 3.0 but is 99% ionized at intestinal pH. What does this suggest about its passive oral absorption?",a:"Absorption is likely poor despite the high log P, because almost all drug exists as the polar ionized species, which cannot cross the lipid bilayer regardless of intrinsic lipophilicity."},
+  {q:"Explain why the stable polymorph's higher ΔHf and Tm mathematically guarantee it has the lowest ideal solubility among polymorphic forms.",a:"Both a larger ΔHf/R prefactor and a more negative (1/Tm−1/T) term drive ln x₂ lower, so the polymorph with the greatest ΔHf and Tm yields the smallest x₂."},
+  {q:"A shake-flask log P assay gives inconsistent results across replicate trials. Suggest two experimental factors from the method's known limitations that could explain this.",a:"Insufficient equilibration time (partitioning not fully reached) and use of solvent volumes too small or imprecise to accurately capture the concentration difference between phases."},
+  {q:"Why would a scientist measure a drug's solubility at multiple pH values spanning both below and above its expected pKa, rather than at a single pH?",a:"To bracket the intrinsic (un-ionized) solubility and independently verify the Henderson-Hasselbalch relationship, allowing pKa determination as a cross-check."},
+  {q:"In the chlordiazepoxide example (So=2 mg/mL; pH4→St=14.6; pH6→St=2.13), why is the calculated pKa nearly identical (4.799 vs 4.813) despite very different pH/St values?",a:"Because both data points lie on the same Henderson-Hasselbalch solubility curve defined by the drug's true pKa and So; agreement validates the model."},
+  {q:"A weak acid has So = 0.1 mg/mL and pKa = 4.5. At approximately what pH would its total solubility reach 10 mg/mL?",a:"pH ≈ 6.5 (solve 10=0.1[1+10^(pH−4.5)] → 10^(pH−4.5)=99 → pH = 4.5 + log(99) ≈ 6.5)."},
+  {q:"Two drugs share the same pKa but have different intrinsic solubilities (So). Will their St-vs-pH curve shapes be the same?",a:"Yes, the shape depends only on 10^(pH−pKa) or 10^(pKa−pH); however, absolute St values are scaled by each drug's own So."},
+  {q:"A drug's ΔHsol is +15 kJ/mol at physiological temperature. Predict how raising storage temperature from 25 °C to 40 °C would affect its solubility.",a:"Solubility would increase, because a positive ΔHsol indicates an endothermic dissolution process, so increased thermal energy favors the dissolved state."},
+  {q:"Why must log P determination via reverse-phase HPLC retention time be calibrated with reference standards of known log P?",a:"Because retention time is a relative, instrument- and column-dependent measurement; it must be converted to log P through a calibration curve, since no direct universal formula links the two."},
+  {q:"A novel chemical entity has no ionizable groups at all. Which Table 23.1 property becomes inapplicable, and what solubility consequence follows?",a:"pKa becomes inapplicable, since there is no acid/base group to titrate; total solubility then equals intrinsic solubility (St = So) at all pH values."},
+  {q:"Explain mechanistically why breaking solvent-solvent bonds is energetically necessary even when a solute simply dissolves into an already-liquid solvent.",a:"Solvent molecules must first separate from their existing solvent-solvent interactions to create space (cavity formation) before solute-solvent (solvation) bonds can form."},
+  {q:"A metastable polymorph is used in a formulation to boost bioavailability. What is the key long-term risk?",a:"It may convert to the more thermodynamically stable, lower-solubility polymorph during storage, reducing dissolution rate and bioavailability unexpectedly."},
+  {q:"Using St = So[1+10^x], explain why St approaches So as pH shifts far in the un-ionized-favoring direction.",a:"When x is very negative, 10^x approaches zero, so St approaches So; when x is very positive, 10^x dominates and St rises nearly exponentially."},
+  {q:"Two labs measure very different aqueous solubilities for the same drug at 'room temperature.' What preformulation-based explanation fits, rooted in solid-state characterization?",a:"The labs may be using different polymorphic or amorphous forms with different Tm and ΔHf values (undetected without DSC/XRPD), which would genuinely differ in equilibrium solubility."},
+  {q:"Why could a drug show an overall exothermic dissolution (ΔHsol negative) even though melting (fusion) is always endothermic?",a:"Because ΔHmix can be sufficiently negative (exothermic solute-solvent bond formation) to outweigh the always-positive ΔHf, making the net ΔHsol negative."},
+  {q:"Estimate the ideal mole-fraction solubility of a drug with Tm = 120 °C and ΔHf = 15 kJ/mol at 37 °C.",a:"x₂ ≈ 0.29 (ln x₂ = 1804.3×(1/393.15 − 1/310.15) ≈ −1.23, so x₂ ≈ e⁻¹·²³)."},
+  {q:"A weak base has pKa 7 and So = 3 mg/mL. What is its approximate total solubility at gastric pH 2?",a:"St = 3×[1+10^(7−2)] = 3×100,001 ≈ 300,003 mg/mL — essentially fully ionized and highly soluble at low gastric pH."},
+  {q:"Contrast the physical meaning of the partition coefficient (P) versus a pH-corrected distribution coefficient for an ionizable drug that is partly ionized.",a:"P describes partitioning of only the un-ionized species; for a partly ionized drug, the true measured (apparent) ratio reflects both species and requires a pH-corrected distribution coefficient, since the simple P equation strictly applies only when the drug is completely un-ionized."},
+  {q:"A drug candidate shows excellent solubility (>50 mg/mL) but very poor oral bioavailability. Propose a physicochemical explanation based on partitioning.",a:"It may have a very low (negative) log P, meaning it is too hydrophilic to partition across the lipid bilayers of the gut wall, so despite dissolving well it cannot be absorbed efficiently."},
+  {q:"Why is a drug's solid-state form (crystalline vs amorphous) considered part of preformulation rather than formulation?",a:"Because it is an intrinsic/derived characteristic of the drug substance that must be understood and controlled before excipients or dosage-form design decisions are made, since it directly affects fundamental solubility and stability behavior."},
+  {q:"If manufactured batches unexpectedly contain a mix of polymorphic forms due to inadequate preformulation, what consequences would you predict?",a:"Inconsistent dissolution rates and bioavailability between batches, possible physical instability (conversion to the more stable form during storage), and regulatory/quality control failures from lack of reproducibility."},
+  {q:"Two weakly basic drugs have pKa values of 4.0 and 9.0. At physiological pH (7.4), which exists predominantly in its more absorbable, un-ionized form?",a:"The drug with pKa 4.0, since at pH 7.4 (more than 2 units above its pKa) it is virtually fully un-ionized; the pKa 9.0 drug is mostly ionized at that pH."},
+  {q:"A drug's ideal solubility (van't Hoff) predicts 50 mg/mL, but its actual measured equilibrium solubility is only 5 mg/mL. What does this suggest about ΔHmix?",a:"ΔHmix is significantly positive (endothermic, unfavorable solute-solvent interaction), since actual dissolution requires more net energy than the ideal (ΔHmix=0) case, reducing solubility below the ideal prediction."},
+  {q:"Why are Table 23.1 properties described as 'a function of molecular structure' while Table 23.2 properties result from 'intermolecular interactions'?",a:"Table 23.1 properties derive directly from the molecule's covalent structure and functional groups, whereas Table 23.2 properties emerge from how molecules pack and interact in the solid or bulk state."},
+  {q:"A drug's ΔHsol appears positive at low temperatures but negative at very high temperatures. What does this imply about using a single van't Hoff-derived ideal solubility value across a wide temperature range?",a:"It would be invalid to extrapolate a single relationship across that range, since a changing sign of ΔHsol indicates temperature-dependent dissolution thermodynamics that the simple ideal (constant ΔHf) model does not capture."},
+  {q:"Why might a scientist prioritize log P over solubility-based pKa determination for a poorly water-soluble ionizable compound?",a:"Because with very low intrinsic solubility, the solubility-based Henderson-Hasselbalch method may be impractical (too little dissolved drug to measure accurately), making other methods more reliable."},
+  {q:"A weak acid candidate remains below 1 mg/mL total solubility even 2 pH units above its pKa. What preformulation strategy remains viable?",a:"Since pH/ionization manipulation is insufficient, a novel dosage form (e.g., solubilization technology, nanosizing, solid dispersion) would be required instead."},
+  {q:"Contrast how temperature and pH each independently influence a weak acid drug's aqueous solubility.",a:"Temperature affects solubility via ΔHsol — endothermic drugs dissolve more as temperature rises; pH affects solubility via ionization state — solubility rises as pH moves above pKa because more drug converts to the more soluble ionized form."},
+  {q:"Summarize, using ΔHsol = ΔHf + ΔHmix, why a drug with a very high melting point could still be reasonably soluble in water.",a:"If its ΔHmix is sufficiently negative (strongly favorable solute-solvent interactions), it can offset a large positive ΔHf, keeping net ΔHsol low enough to permit good solubility despite the high melting point."},
+];
+const flashcardSets = {easy: flashcardsEasy, medium: flashcardsMedium, hard: flashcardsHard};
+let fcLevel = 'easy';
+let fcOrder = flashcardSets[fcLevel].map((_,i)=>i);
+const fcGrid = document.getElementById('fcGrid');
+const fcCount = document.getElementById('fcCount');
+function renderFlashcards(){
+  const deck = flashcardSets[fcLevel];
+  fcGrid.innerHTML = '';
+  fcCount.textContent = deck.length + ' cards';
+  fcOrder.forEach(idx=>{
+    const c = deck[idx];
+    const card = document.createElement('div');
+    card.className = 'fc-card';
+    card.innerHTML = `<div class="fc-inner">
+      <div class="fc-face fc-front"><div class="fc-text">${c.q}</div></div>
+      <div class="fc-face fc-back"><div class="fc-text">${c.a}</div></div>
+    </div>`;
+    card.addEventListener('click', ()=> card.classList.toggle('flip'));
+    fcGrid.appendChild(card);
+  });
+}
+document.getElementById('fcShuffle').addEventListener('click', ()=>{
+  for(let i=fcOrder.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [fcOrder[i],fcOrder[j]] = [fcOrder[j],fcOrder[i]];
+  }
+  renderFlashcards();
+});
+document.querySelectorAll('#fcLevelRow .level-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#fcLevelRow .level-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    fcLevel = btn.dataset.level;
+    fcOrder = flashcardSets[fcLevel].map((_,i)=>i);
+    renderFlashcards();
+  });
+});
+renderFlashcards();
+
+/* ============ QUIZ BANK ============ */
+const quizEasy = [
+  {q:"What is preformulation?",c:["The characterization of physicochemical properties before formulation begins","The marketing phase of drug development","The clinical trial phase","The process of tablet coating"]},
+  {q:"Formulation is best described as:",c:["Developing a drug candidate into a drug product","Discovering a new biological target","Registering a patent for a molecule","Synthesizing the active pharmaceutical ingredient"]},
+  {q:"Intrinsic properties can only be changed by:",c:["Chemical modification of the molecule","Changing the powder particle size","Changing the storage humidity","Changing the crystal habit"]},
+  {q:"Derived (macroscopic) properties result from:",c:["Intermolecular interactions","The molecule's covalent bond structure","The atomic number of constituent elements","Genetic factors"]},
+  {q:"Which of the following is an intrinsic property?",c:["pKa","Bulk density","Angle of repose","Particle shape"]},
+  {q:"Which of the following is a derived/macroscopic property?",c:["Bulk density","Aqueous solubility","log P","pKa"]},
+  {q:"The first step of preformulation is:",c:["Developing a suitable assay","Selecting the final dosage form","Conducting clinical trials","Scaling up manufacturing"]},
+  {q:"Which five techniques enable full preformulation characterization?",c:["UV spectrophotometry, HPLC, DSC, DVS, XRPD","TLC, TGA, NMR, IR, MS","Dissolution, disintegration, friability, hardness, weight variation","Karl Fischer, GC, ICP-MS, AAS, elemental analysis"]},
+  {q:"TLC and TGA in preformulation are:",c:["Useful supporting techniques but not essential early on","Mandatory for every preformulation study","Used only for stability testing","Replacements for HPLC"]},
+  {q:"Which assay determines solubility, and what does it require?",c:["UV spectrophotometry; requires a chromophore","HPLC; requires volatility","DVS; requires an acid or basic group","XRPD; requires crystallinity"]},
+  {q:"Which assay(s) determine pKa?",c:["UV spectrophotometry or potentiometric titration","BET surface area analysis","Tapping densitometry","Angle of repose"]},
+  {q:"Hygroscopicity is typically measured using:",c:["DVS or TGA","HPLC","UV spectrophotometry","Potentiometric titration"]},
+  {q:"Stability (hydrolysis, photolysis, oxidation) is typically assessed by:",c:["HPLC with suitable storage conditions","Tapping densitometer","Angle of repose","BET"]},
+  {q:"Melting point is determined by:",c:["DSC or melting point apparatus","HPLC","UV spectrophotometry","DVS"]},
+  {q:"Physical forms such as polymorphs and amorphous material are identified using:",c:["DSC, XRPD, and microscopy","Only UV spectrophotometry","Only HPLC","Tapping densitometer alone"]},
+  {q:"Particle shape, size distribution, and surface area are assessed using:",c:["Microscopy, particle sizing, and BET","DSC only","Potentiometric titration","Angle of repose alone"]},
+  {q:"Bulk, tapped, and true density are measured with a:",c:["Tapping densitometer","BET analyzer","DSC","Titrator"]},
+  {q:"Powder flow is assessed by:",c:["Angle of repose","Carr's index only","log P","pKa"]},
+  {q:"Compressibility is assessed using:",c:["Carr's index and Hausner ratio","Angle of repose only","BET surface area","DVS"]},
+  {q:"Excipient compatibility is typically checked with:",c:["HPLC and DSC","Angle of repose","Tapping densitometer","UV spectrophotometry alone"]},
+  {q:"Aqueous solubility is described as critical because:",c:["No drug reaches its therapeutic target without first being in solution","It determines tablet color","It affects only packaging choice","It has no effect on bioavailability"]},
+  {q:"For an oral solid dosage form, a preferable aqueous solubility is:",c:["Greater than 10 mg/mL","Less than 0.1 mg/mL","Exactly 1 mg/mL","Greater than 100 g/mL"]},
+  {q:"If a drug candidate's solubility is less than 1 mg/mL, the scientist should consider:",c:["Salt formation, if possible","Increasing particle size","Reducing the dose","Ignoring the issue"]},
+  {q:"If solubility cannot be improved via salt formation, the next option is:",c:["A novel dosage form","Discontinuing all testing","Increasing tablet hardness","Using a larger tablet press"]},
+  {q:"Equilibrium solubility refers to:",c:["The dissolved drug concentration in a saturated solution at equilibrium with excess solid","The maximum theoretical solubility regardless of temperature","The solubility only in organic solvents","The rate of dissolution"]},
+  {q:"Intrinsic solubility (S₀) refers specifically to:",c:["The equilibrium solubility of the un-ionized form of the drug","The total solubility at any pH","The solubility of the salt form only","The solubility in n-octanol"]},
+  {q:"During dissolution, which bonds must be broken?",c:["Solid-solid bonds and solvent-solvent bonds","Only covalent bonds within the molecule","Only hydrogen bonds in water","No bonds are broken"]},
+  {q:"The net enthalpy of dissolution equals:",c:["ΔHf + ΔHmix","ΔHf − ΔHmix","ΔHf × ΔHmix","ΔHmix alone"]},
+  {q:"Dissolution is termed 'ideal' when:",c:["ΔHmix = 0","ΔHf = 0","ΔHsol is very large","The drug is a salt"]},
+  {q:"The van't Hoff equation for ideal solubility is:",c:["ln x₂ = −ΔHf/RT + ΔHf/RTm","ln x₂ = ΔHf × RT","x₂ = ΔHf/Tm","ln x₂ = R × T × Tm"]},
+  {q:"In the ideal solubility equation, x₂ represents:",c:["The saturated drug concentration in mole fraction units","The melting point in Kelvin","The gas constant","The enthalpy of mixing"]},
+  {q:"In the ideal solubility equation, Tm represents:",c:["The melting temperature of the pure drug","The experimental (test) temperature","The boiling point of the solvent","The glass transition temperature"]},
+  {q:"For aspirin (Tm = 137 °C, ΔHf = 29.80 kJ/mol), the ideal mole fraction solubility at 25 °C is approximately:",c:["0.0375","0.375","0.00375","1.0"]},
+  {q:"If a drug's ΔHsol is positive, dissolution is:",c:["Endothermic, and solubility increases with temperature","Exothermic, and solubility decreases with temperature","Neutral, with no temperature dependence","Always negative"]},
+  {q:"If ΔHsol is negative, dissolution is:",c:["Exothermic, and solubility decreases as temperature increases","Endothermic, and solubility increases as temperature increases","Unaffected by temperature","Always positive"]},
+  {q:"Compared to a metastable polymorph, a stable polymorph usually has:",c:["Higher melting point, greater ΔHf, and lower solubility","Lower melting point and higher solubility","The same solubility","No melting point at all"]},
+  {q:"The amorphous form of a drug generally has:",c:["The greatest solubility, because it has no melting point","The lowest solubility of all forms","The same solubility as the stable crystal","No solubility at all"]},
+  {q:"Approximately what proportion of marketed drugs ionize between pH 2 and 12?",c:["About two-thirds","About one-tenth","Almost none","All of them"]},
+  {q:"When pH is at least 2 units below the pKa, a weakly acidic drug is:",c:["Essentially completely un-ionized","Completely ionized","50% ionized","Insoluble"]},
+  {q:"When pH is at least 2 units above the pKa, a weakly acidic drug is:",c:["Virtually fully ionized","Completely un-ionized","Precipitated as a solid","Unaffected"]},
+  {q:"The total solubility equation for a weak acid is:",c:["St = S₀[1 + 10^(pH−pKa)]","St = S₀[1 + 10^(pKa−pH)]","St = S₀ × pKa","St = S₀ / pH"]},
+  {q:"The total solubility equation for a weak base is:",c:["St = S₀[1 + 10^(pKa−pH)]","St = S₀[1 + 10^(pH−pKa)]","St = S₀ − pKa","St = S₀ × pH"]},
+  {q:"Rearranged for calculating pKa from solubility data (weak acid):",c:["pKa = pH + log[(St−S₀)/S₀]","pKa = pH − log[(St−S₀)/S₀]","pKa = St/S₀","pKa = pH × S₀"]},
+  {q:"pKa is most commonly measured instrumentally using:",c:["Potentiometric pH titration","X-ray powder diffraction","Differential scanning calorimetry","BET surface area analysis"]},
+  {q:"On a pH titration curve, pH equals pKa when the compound is:",c:["50% ionized","100% ionized","Completely un-ionized","At its melting point"]},
+  {q:"Besides titration, pKa can also be measured by:",c:["Conductivity and spectroscopy","Only DSC","Only XRPD","Only tapping density"]},
+  {q:"The partition coefficient (P) describes:",c:["The equilibrium ratio of a solute's concentration between two immiscible solvents","The rate of drug absorption","The melting point of a solid","The ionization constant of a base"]},
+  {q:"Which solvent commonly models biological lipid bilayers in partition studies?",c:["n-Octanol","Ethanol","Acetone","Water alone"]},
+  {q:"The octanol-water partition coefficient formula is:",c:["P = Co/Cw","P = Cw/Co","P = Co × Cw","P = Co − Cw"]},
+  {q:"A partition coefficient greater than 1 indicates a drug is:",c:["Lipophilic","Hydrophilic","Fully ionized","Insoluble in all solvents"]},
+  {q:"A partition coefficient less than 1 indicates a drug is:",c:["Hydrophilic","Lipophilic","Amorphous","A stable polymorph"]},
+  {q:"Log P values are used instead of raw P values because:",c:["Hydrophilic drugs give very small P values, so log P differentiates them better","Log P is always positive","Log P removes the need for pKa data","Log P equals melting point"]},
+  {q:"The simple partition coefficient equation applies to an ionizable drug only when:",c:["The drug cannot ionize, or the aqueous pH keeps it completely un-ionized","The drug is fully ionized","The pH equals the pKa","The drug is amorphous"]},
+  {q:"Ionized drug species partition poorly into organic phases because:",c:["They are too polar to dissolve in organic phases","They have no molecular weight","They lack a chromophore","They are unstable"]},
+  {q:"In the shake-flask method, after separating the phases, what is measured?",c:["The concentration of drug remaining in the aqueous phase","The melting point of the solid","The particle size of the powder","The crystal habit"]},
+  {q:"A key drawback of the shake-flask method is:",c:["It requires relatively large volumes and time to reach equilibrium","It cannot be used with any drug","It only works for gases","It requires no equipment"]},
+  {q:"In normal-phase chromatography:",c:["The stationary phase is polar and the mobile phase is nonpolar","The stationary phase is nonpolar and the mobile phase is polar","Both phases are nonpolar","Both phases are polar"]},
+  {q:"In reverse-phase chromatography:",c:["The stationary phase is nonpolar and the mobile phase is polar","The stationary phase is polar and the mobile phase is nonpolar","Neither phase interacts with the analyte","The mobile phase is a gas"]},
+  {q:"How many of several drug candidate molecules are typically developed into a final drug product?",c:["Only one, at best","All of them are developed simultaneously","Usually five or more","None; formulation happens before candidate selection"]},
+  {q:"What is the term for solute-solvent bonds formed during dissolution?",c:["Solvation","Sublimation","Polymorphism","Hygroscopicity"]},
+];
+const quizMedium = [
+  {q:"Why can intrinsic properties be changed only by chemical modification, while derived properties change with environment?",c:["Intrinsic properties belong to the molecule itself; derived properties arise from intermolecular interactions dependent on solid-state form and surroundings","Intrinsic properties are always more soluble than derived properties","Derived properties are fixed at the time of drug discovery","There is no real difference between the two categories"]},
+  {q:"How do Table 23.1 and Table 23.2 properties fundamentally differ?",c:["Table 23.1 lists intrinsic molecular properties; Table 23.2 lists macroscopic/bulk properties from intermolecular interactions","Table 23.1 covers only solid-state properties; Table 23.2 covers only liquid-state properties","Table 23.1 is for tablets; Table 23.2 is for capsules","There is no meaningful difference"]},
+  {q:"Why do both the solubility and log P assays in Table 23.1 require a chromophore?",c:["Both are measured using UV spectrophotometry, which relies on light absorbance","Both require radioactive labeling","Chromophores are needed only for stability testing","Chromophores affect only melting point measurements"]},
+  {q:"Why is aqueous solubility typically the first physicochemical parameter determined in preformulation?",c:["No drug can reach its therapeutic target without first dissolving","It is the cheapest test to perform","Regulatory agencies require it be tested first by law","It has no bearing on other properties, so order doesn't matter"]},
+  {q:"A candidate has an aqueous solubility of 0.5 mg/mL. What is the indicated next step?",c:["Consider salt formation, since solubility is below 1 mg/mL","Proceed directly to tablet compression","No action needed; the solubility is adequate","Switch to an injectable dosage form automatically"]},
+  {q:"For a non-ionizable drug, how does its intrinsic solubility compare to its equilibrium solubility?",c:["They are identical, since there is no ionized fraction","Intrinsic solubility is always higher","Equilibrium solubility is always higher","They cannot be compared"]},
+  {q:"Why must solid-solid bonds be broken during dissolution even though nothing is melting?",c:["The same bonds broken during melting must be broken to free molecules for solvation","Only covalent bonds are broken during dissolution","Dissolution occurs without breaking any bonds","Solid-solid bonds are irrelevant to dissolution"]},
+  {q:"What distinguishes the enthalpy of mixing from the enthalpy of fusion in dissolution?",c:["Mixing enthalpy reflects breaking solvent-solvent bonds and forming solute-solvent bonds, while fusion enthalpy reflects breaking solid-solid bonds","They are the same quantity measured differently","Mixing enthalpy applies only to gases","Fusion enthalpy only applies to ionized drugs"]},
+  {q:"Under what specific condition does ΔHmix equal zero, making dissolution 'ideal'?",c:["When the energy of the solute-solvent bond equals the energy of the solvent-solvent bond","When the drug has no melting point","When pH equals pKa","When the drug is fully ionized"]},
+  {q:"According to the van't Hoff relationship, why does a higher melting point generally predict lower ideal solubility?",c:["A higher Tm makes the (1/Tm − 1/T) term less negative, reducing ln x₂","A higher Tm always means a smaller ΔHf","Melting point has no mathematical relationship to solubility","Higher Tm increases ΔHmix"]},
+  {q:"Why does the stable polymorph typically show the lowest solubility among solid forms of a drug?",c:["It usually has the highest melting point and greatest ΔHf, both lowering ideal solubility","It has the smallest particle size","It lacks a crystal lattice","It always has the lowest molecular weight"]},
+  {q:"Why might a metastable polymorph be deliberately chosen in a formulation?",c:["It has greater solubility than the stable form, which can improve dissolution and bioavailability","It is always cheaper to manufacture","It never converts back to the stable form","It has no measurable melting point"]},
+  {q:"Why does the amorphous form often enhance bioavailability of poorly soluble drugs?",c:["It lacks a crystal lattice (no melting point), giving the highest solubility of any solid form","It has the lowest surface area","It is always chemically more stable than crystals","It cannot be characterized by XRPD"]},
+  {q:"A drug shows decreasing solubility as temperature increases. What does this indicate about its ΔHsol?",c:["ΔHsol is negative (exothermic dissolution)","ΔHsol is positive (endothermic dissolution)","ΔHsol equals zero","ΔHsol cannot be determined from this observation"]},
+  {q:"On the ln x₂ vs 1/temperature plot, which drug type's line slopes upward as 1/temperature increases?",c:["The exothermic drug (ΔHsol negative)","The endothermic drug (ΔHsol positive)","Both slope upward identically","Neither line has any slope"]},
+  {q:"Beyond enabling solubility manipulation via salt formation, why is understanding acid/base behaviour especially important in preformulation?",c:["Roughly two-thirds of marketed drugs ionize within the pH 2–12 range","Almost no marketed drugs are ionizable","Acid/base behaviour only matters for injectable drugs","It has no bearing on solubility"]},
+  {q:"A weakly acidic drug has pKa 5. At pH 3, is the drug predominantly ionized or un-ionized?",c:["Predominantly un-ionized, since pH is 2 units below pKa","Predominantly ionized","Exactly 50% ionized","Cannot be determined without knowing So"]},
+  {q:"A weakly basic drug has pKa 8. At pH 10, is the drug predominantly ionized or un-ionized?",c:["Predominantly un-ionized, since for a base, pH above pKa favors the un-ionized form","Predominantly ionized","Exactly 50% ionized","Completely insoluble"]},
+  {q:"Why does total solubility (St) equal the sum of the un-ionized and ionized solubility fractions?",c:["Both neutral and ionized species contribute to the total dissolved drug concentration at a given pH","Only the ionized fraction dissolves","Only the un-ionized fraction dissolves","St and So are always equal by definition"]},
+  {q:"How can measuring total solubility at two different pH values allow calculation of a drug's pKa?",c:["By substituting each (pH, St) pair into the rearranged Henderson-Hasselbalch solubility equation and solving for pKa","By simply averaging the two pH values","pKa cannot be derived from solubility data","By measuring melting point at each pH"]},
+  {q:"In the chlordiazepoxide worked example, why do the pKa values calculated at pH 4 and pH 6 nearly agree (4.799 vs 4.813)?",c:["Both data points lie on the same Henderson-Hasselbalch solubility curve defined by the true pKa and So","It is a coincidence with no theoretical basis","The two calculations use completely different equations","Agreement only occurs for weak bases"]},
+  {q:"Why does pH equal to pKa correspond to exactly 50% ionization on a titration curve?",c:["At that point, ionized and un-ionized concentrations are equal, making their log ratio zero","At that point, the drug is completely insoluble","pH always equals pKa at full ionization","This relationship only holds for weak bases"]},
+  {q:"Why is n-octanol specifically chosen to model biological partitioning rather than a purely nonpolar solvent?",c:["Its structure mimics the short-chain hydrocarbon character of biological lipid bilayers","It is the cheapest organic solvent available","It has the same density as water","It is required by international pharmacopeial law"]},
+  {q:"Why does a lipophilic drug have a partition coefficient (P) greater than 1?",c:["It distributes preferentially into the octanol (lipid-like) phase rather than water","It cannot dissolve in either phase","It has a very high pKa","It is always fully ionized"]},
+  {q:"Why are log P values generally preferred over raw P values when reporting lipophilicity?",c:["Hydrophilic drugs give very small P values; log P converts these into convenient negative numbers","Log P is always a whole number","Raw P values cannot be measured experimentally","Log P removes the need for any experimental testing"]},
+  {q:"Why does the simple partition coefficient equation apply only to the un-ionized form of a drug?",c:["Ionized species are too polar to dissolve appreciably in the organic phase","Ionized species evaporate too quickly","The equation was derived only for neutral molecules with no chemical basis","P values are undefined for any ionizable compound"]},
+  {q:"How can a scientist ensure a partition coefficient measurement is valid for an ionizable drug?",c:["Adjust the aqueous phase pH so the drug remains completely un-ionized during the experiment","Use a higher drug concentration","Perform the experiment at 0 °C","Add a second organic solvent"]},
+  {q:"Why must the shake-flask method allow shaking for as long as 30 minutes?",c:["To maximize contact surface area between the two immiscible solvents so equilibrium partitioning can be reached","To evaporate the water phase completely","To allow the drug to degrade for stability testing","30 minutes has no scientific rationale; it is arbitrary"]},
+  {q:"In the shake-flask method, how is the drug concentration in the octanol phase typically calculated?",c:["By subtracting the final aqueous concentration from the initial aqueous concentration","By direct titration of the octanol phase only","By measuring the octanol phase's boiling point","By assuming it equals the aqueous concentration"]},
+  {q:"Why is the shake-flask method considered less convenient than chromatographic methods for measuring log P?",c:["It requires relatively large solvent volumes and sufficient time to reach equilibrium","It cannot be used for any drug","It requires radioactive isotopes","It only works for gases"]},
+  {q:"Why can reverse-phase HPLC retention time be used to estimate a compound's log P?",c:["Retention on a nonpolar stationary phase with a polar mobile phase depends on the analyte's relative lipophilicity","HPLC directly measures the octanol-water ratio","Retention time and log P are mathematically identical constants","HPLC requires no stationary phase"]},
+  {q:"What is the key polarity difference between normal-phase and reverse-phase chromatography?",c:["Normal-phase: polar stationary phase, nonpolar mobile phase; reverse-phase is the opposite","Normal-phase uses only gaseous mobile phases","Reverse-phase never separates ionizable compounds","There is no polarity difference between the two"]},
+  {q:"Why does hygroscopicity matter in preformulation even though moisture uptake isn't a chemical property of the molecule itself?",c:["Moisture uptake affects powder flow, chemical stability, and manufacturability","Hygroscopicity has no practical consequences","Hygroscopic drugs cannot be tested by DVS","Hygroscopicity only matters for liquid dosage forms"]},
+  {q:"Why is excipient compatibility tested using both HPLC and DSC together?",c:["HPLC detects chemical degradation products, while DSC detects physical interactions such as melting point shifts","HPLC and DSC measure exactly the same thing, so using both is redundant","DSC is used only for particle size determination","HPLC cannot detect any drug-excipient interactions"]},
+  {q:"Why does poor powder flow create problems during tablet manufacturing?",c:["It leads to inconsistent weight and content uniformity during tableting","It has no effect on tablet quality","It only affects tablet color","It improves compressibility"]},
+  {q:"Carr's index and Hausner ratio both assess compressibility using which raw measurements?",c:["Bulk density and tapped density","Melting point and enthalpy of fusion","pKa and log P","Particle shape and surface area only"]},
+  {q:"Why would particle size distribution be measured alongside BET surface area?",c:["Both influence dissolution rate and powder behavior, with BET giving a more precise surface-area measure","They measure completely unrelated properties","BET replaces the need for particle sizing entirely","Particle size has no effect on dissolution"]},
+  {q:"Which techniques would most directly detect that a drug candidate is highly hygroscopic?",c:["DVS and TGA","HPLC and UV spectrophotometry","Angle of repose and Carr's index","Potentiometric titration and conductivity"]},
+  {q:"A drug shows no measurable melting point under DSC. What does this most likely indicate, and what solubility consequence follows?",c:["The amorphous form, which typically shows the greatest solubility","A highly stable crystal, with the lowest solubility","A liquid formulation error","Nothing; melting point is unrelated to solid form"]},
+  {q:"Why does the enthalpy of fusion (ΔHf) feed directly into predicting a drug's ideal solubility?",c:["ΔHf is a term in the van't Hoff ideal-solubility equation, linking crystal lattice energy to predicted solubility","ΔHf only affects the drug's color","ΔHf and solubility are entirely unrelated","ΔHf replaces the need for measuring Tm"]},
+  {q:"Why is intrinsic solubility (So) the key baseline value in pH-dependent solubility calculations?",c:["It represents the constant solubility of the un-ionized species, from which the ionized contribution is calculated","It represents the maximum possible solubility at any pH","It is always equal to total solubility","It has no role in Henderson-Hasselbalch calculations"]},
+  {q:"Why would a scientist need both St and So to experimentally determine a drug's pKa?",c:["pKa is calculated from the ratio of ionized to un-ionized solubility fractions, requiring both values","St alone is sufficient without knowing So","pKa can only be measured by potentiometric titration, never from solubility data","So is irrelevant to pKa determination"]},
+  {q:"Why does the 'equal volumes' assumption matter when interpreting shake-flask results?",c:["The partition coefficient calculation assumes concentrations are compared on a consistent volume basis","Volume has no effect on partition coefficient results","Equal volumes are required only for gases","Unequal volumes always double the measured P value"]},
+  {q:"If a drug's melting point increases while ΔHf stays constant, how does this affect its predicted ideal solubility?",c:["Ideal solubility decreases","Ideal solubility increases","Ideal solubility is unaffected","ΔHmix automatically becomes zero"]},
+  {q:"Two structurally similar drugs have nearly identical ΔHf values but very different aqueous solubilities. What is a likely explanation, based on the van't Hoff relationship?",c:["Their melting points (Tm) likely differ substantially, strongly affecting ideal solubility","Their molecular weights must be different","One of them must be a liquid at room temperature","ΔHf has no influence on solubility, so this is unexplainable"]},
+  {q:"What does it mean for hygroscopicity and stability assays to have 'no particular sample requirement'?",c:["They do not depend on the molecule possessing a chromophore or ionizable group, unlike solubility, pKa, or log P","They cannot be performed on solid samples","They require radioactive labeling","They are the only assays requiring a chromophore"]},
+  {q:"Why is stability testing (hydrolysis, photolysis, oxidation) paired with 'suitable storage conditions' rather than a single measured value?",c:["Degradation rates depend on environmental exposure, so controlled conditions are needed for comparable data","Storage conditions have no effect on degradation rate","Stability testing is always performed at a single fixed temperature by definition","HPLC alone can predict stability without any storage testing"]},
+  {q:"Why can shake-flask log P determination become unreliable for very lipophilic or very hydrophilic drugs?",c:["At extreme log P values, the concentration in one phase becomes too low to measure accurately","Shake-flask only works for drugs with log P exactly equal to zero","Extreme log P values cannot exist in real molecules","The method requires radioactive isotopes for extreme values"]},
+  {q:"Why is the sequential order in Table 23.1 (solubility, then pKa, then log P) logical for preformulation planning?",c:["Solubility often depends on ionization state (pKa), and log P calculations require knowing the un-ionized form's behavior","The order is arbitrary and has no scientific rationale","Log P must always be measured before solubility","pKa cannot be measured until log P is known"]},
+  {q:"How does possessing an ionizable group give a molecule two separate strategic options for improving solubility?",c:["It allows solubility manipulation through pH-dependent ionization and through salt formation","It only allows salt formation, not pH manipulation","It eliminates the need for solubility testing altogether","It guarantees the drug will always be soluble above 10 mg/mL"]},
+];
+const quizHard = [
+  {q:"A drug has Tm = 200 °C and ΔHf = 25.0 kJ/mol. What is its approximate ideal mole-fraction solubility (x₂) at 37 °C?",c:["≈0.035","≈0.35","≈0.0035","≈0.35 × 10⁻⁵"]},
+  {q:"A drug has Tm = 150 °C and ΔHf = 20.0 kJ/mol. What is its approximate ideal mole-fraction solubility at 25 °C?",c:["≈0.092","≈0.92","≈0.0092","≈9.2"]},
+  {q:"A weak acid has So = 5 mg/mL. At pH 3, St = 45 mg/mL. What is its approximate pKa?",c:["≈3.90","≈3.00","≈4.50","≈2.10"]},
+  {q:"A weak base has So = 1 mg/mL and pKa = 8. What is its approximate total solubility at pH 6?",c:["≈101 mg/mL","≈1.01 mg/mL","≈10.1 mg/mL","≈1010 mg/mL"]},
+  {q:"A weak acid has pKa = 5. What percentage is ionized at pH 7?",c:["≈99.0%","≈50.0%","≈9.9%","≈1.0%"]},
+  {q:"A weak base has pKa = 9. What percentage is ionized at pH 7?",c:["≈99.0%","≈50.0%","≈1.0%","≈9.9%"]},
+  {q:"A weakly acidic drug's total solubility rises sharply above pH 6. What does this most likely suggest about its pKa?",c:["Its pKa is likely near or below pH 6","Its pKa is likely above pH 12","Its pKa has no relationship to this pattern","Its pKa must be exactly 6.0"]},
+  {q:"Why does an amorphous solid dissolve faster and more extensively than its crystalline counterpart, even though both are chemically identical?",c:["The amorphous form has no crystal lattice to disrupt, lowering the energetic barrier to dissolution","The amorphous form has a higher molecular weight","The amorphous form is always less hygroscopic","Amorphous solids have a defined melting point that crystals lack"]},
+  {q:"A weak base (pKa 7.4) is compared in gastric fluid (pH 2) versus intestinal fluid (pH 7). Where is more un-ionized (lipophilic) drug expected?",c:["In the intestine, since pH is closer to the pKa","In the stomach, since acidic pH always favors the un-ionized form","Equal amounts in both locations","Un-ionized fraction cannot be predicted from pH and pKa alone"]},
+  {q:"If ΔHmix were strongly negative (exothermic) rather than zero, how would actual solubility compare to the 'ideal' solubility predicted by van't Hoff?",c:["Actual solubility would be higher than ideal","Actual solubility would be lower than ideal","They would always be identical","ΔHmix has no effect on actual vs ideal solubility"]},
+  {q:"A drug with log P = 3.0 is 99% ionized at intestinal pH. What does this suggest about its passive oral absorption?",c:["Absorption is likely poor despite the high log P, since the ionized species cannot cross lipid membranes","Absorption is guaranteed to be excellent because log P is high","Ionization state is irrelevant if log P is favorable","The drug will absorb equally well regardless of ionization"]},
+  {q:"Why does the stable polymorph's higher ΔHf and Tm mathematically guarantee it has the lowest ideal solubility among polymorphic forms?",c:["Both a larger ΔHf/R prefactor and a more negative (1/Tm−1/T) term drive ln x₂ lower","Higher ΔHf always increases ln x₂","Tm has no mathematical role in the van't Hoff equation","ΔHf and Tm cancel each other out exactly"]},
+  {q:"A shake-flask log P assay gives inconsistent results across replicates. Which two factors from the method's known limitations best explain this?",c:["Insufficient equilibration time and imprecise/small solvent volumes","Excess DSC scanning rate and XRPD beam misalignment","Too much HPLC mobile phase and incorrect column temperature","Overuse of potentiometric titration reagents"]},
+  {q:"Why would a scientist measure a weak acid's solubility at pH values both below and above its expected pKa, rather than at just one pH?",c:["To bracket the intrinsic solubility and independently verify the Henderson-Hasselbalch relationship","Because a single pH measurement is scientifically impossible","Because pKa cannot be estimated any other way","Because solubility is identical at every pH for ionizable drugs"]},
+  {q:"In the chlordiazepoxide example, pKa calculated at pH 4 (4.799) and at pH 6 (4.813) nearly agree. What does this confirm?",c:["The intrinsic solubility and Henderson-Hasselbalch model correctly describe the drug's ionization behavior","The two pH values must have been measured incorrectly","pKa always changes with pH, so agreement is coincidental","So and St are unrelated to pKa calculations"]},
+  {q:"A weak acid has So = 0.1 mg/mL and pKa = 4.5. At approximately what pH would total solubility reach 10 mg/mL?",c:["≈6.5","≈4.5","≈8.5","≈5.0"]},
+  {q:"Two drugs share the same pKa but have different intrinsic solubilities (So). Will their St-vs-pH curve shapes be the same?",c:["Yes, the shape is identical (same dependence on pH−pKa), but absolute St values scale with each drug's So","No, different So values always produce different curve shapes","St is independent of So for any drug","The curve shape depends only on temperature, not So"]},
+  {q:"A drug's ΔHsol is +15 kJ/mol. How would raising storage temperature from 25 °C to 40 °C likely affect its solubility?",c:["Solubility would increase, since positive ΔHsol indicates endothermic dissolution","Solubility would decrease, since positive ΔHsol always means exothermic dissolution","Temperature change would have no effect on solubility","Solubility would first increase, then suddenly drop to zero"]},
+  {q:"Why must reverse-phase HPLC log P determination be calibrated against reference standards of known log P?",c:["Retention time is a relative, instrument-dependent measurement with no direct universal formula linking it to log P","HPLC retention time is a universal constant identical to log P","Calibration is only needed for aqueous solubility, not log P","No calibration is ever needed for chromatographic log P methods"]},
+  {q:"A novel chemical entity has no ionizable groups at all. Which Table 23.1 property becomes inapplicable, and what solubility consequence follows?",c:["pKa becomes inapplicable; total solubility equals intrinsic solubility (St = So) at all pH values","Solubility becomes inapplicable; only log P can be measured","Stability testing becomes inapplicable","Hygroscopicity becomes inapplicable"]},
+  {q:"Why is breaking solvent-solvent bonds energetically necessary even when a solute simply dissolves into an already-liquid solvent?",c:["Solvent molecules must separate to create space (cavity formation) before solute-solvent bonds can form","Solvent-solvent bonds never actually break during dissolution","Only solute-solute bonds break during dissolution","Cavity formation only occurs in solid-solid dissolution"]},
+  {q:"A metastable polymorph is used to boost bioavailability. What is the key long-term risk, based on polymorph stability principles?",c:["It may convert to the more stable, lower-solubility form during storage, reducing bioavailability unexpectedly","It will spontaneously become amorphous, increasing solubility further","It cannot be characterized by DSC or XRPD","It has no risk, since metastable forms are permanently stable"]},
+  {q:"In St = So[1+10^x], why does St approach So as pH shifts far in the un-ionized-favoring direction?",c:["10^x approaches zero when x is very negative, so St approaches So","10^x approaches infinity in that direction","So becomes undefined at extreme pH","St and So are unrelated mathematically"]},
+  {q:"Two labs measure very different aqueous solubilities for the same drug at 'room temperature.' What preformulation-based explanation, involving solid-state characterization, best fits?",c:["The labs may be using different polymorphic or amorphous forms with different Tm and ΔHf values","Room temperature always varies enough to explain large solubility differences","Solubility cannot differ between labs if the same drug is used","Different labs always use different assay instruments, explaining the difference entirely"]},
+  {q:"Why could a drug show an overall exothermic dissolution (ΔHsol negative) even though melting (fusion) is always endothermic?",c:["A sufficiently negative ΔHmix can outweigh the always-positive ΔHf","ΔHf can itself become negative for some drugs","Exothermic dissolution is impossible according to the equation","ΔHmix is always zero in real systems"]},
+  {q:"Estimate the ideal mole-fraction solubility of a drug with Tm = 120 °C and ΔHf = 15 kJ/mol at 37 °C.",c:["≈0.29","≈0.029","≈2.9","≈0.0029"]},
+  {q:"A weak base has pKa 7 and So = 3 mg/mL. What is its approximate total solubility at gastric pH 2?",c:["≈300,000 mg/mL (essentially fully ionized)","≈3 mg/mL (unaffected by pH)","≈0.03 mg/mL","≈30 mg/mL"]},
+  {q:"Why can't the simple partition coefficient (P) describe the lipophilicity of a drug that is 90% ionized at physiological pH?",c:["P is defined for the un-ionized species only; at 90% ionization the measured ratio would misrepresent true lipophilicity","P automatically corrects for ionization state","Ionized drugs always have P values greater than 1","Partition coefficients cannot be measured for ionizable drugs under any condition"]},
+  {q:"A drug has excellent aqueous solubility (>50 mg/mL) but very poor oral bioavailability. What physicochemical explanation fits best?",c:["It may have a very low (negative) log P, making it too hydrophilic to cross lipid membranes","It must have a very high melting point","It must be completely un-ionized at all pH values","High solubility always guarantees high bioavailability, so this cannot occur"]},
+  {q:"Why is a drug's solid-state form (crystalline vs amorphous) considered part of preformulation rather than formulation?",c:["It is an intrinsic/derived characteristic that must be understood before dosage-form design decisions are made","Solid-state form is determined only after tablet compression","Solid-state form has no effect on solubility or stability","Formulation scientists never need solid-state data"]},
+  {q:"If manufactured batches unexpectedly contain a mix of polymorphic forms due to inadequate preformulation, what consequence is most likely?",c:["Inconsistent dissolution rates and bioavailability between batches","Uniform dissolution regardless of polymorphic form","Improved regulatory approval chances","No effect, since polymorphs are chemically identical"]},
+  {q:"Two weakly basic drugs have pKa values of 4.0 and 9.0. At physiological pH (7.4), which exists predominantly in its more absorbable, un-ionized form?",c:["The drug with pKa 4.0","The drug with pKa 9.0","Both are equally un-ionized","Neither is un-ionized at this pH"]},
+  {q:"A drug's ideal solubility (van't Hoff) predicts 50 mg/mL, but its actual measured solubility is only 5 mg/mL. What does this suggest about ΔHmix?",c:["ΔHmix is significantly positive (endothermic, unfavorable solute-solvent interaction)","ΔHmix must be exactly zero","ΔHmix is irrelevant to this discrepancy","ΔHf must have been measured incorrectly"]},
+  {q:"Why are Table 23.1 properties described as 'a function of molecular structure' while Table 23.2 properties result from 'intermolecular interactions'?",c:["Table 23.1 properties derive from the molecule's own structure; Table 23.2 properties emerge from how molecules pack and interact in bulk","Both tables describe exactly the same underlying phenomena","Table 23.2 properties are always more important clinically","Table 23.1 properties depend only on excipients"]},
+  {q:"A drug's ΔHsol appears positive at low temperatures but negative at very high temperatures. What does this imply about using one van't Hoff ideal-solubility value across a wide temperature range?",c:["It would be invalid, since dissolution thermodynamics are temperature-dependent beyond the simple model","It is always valid regardless of the sign change","This pattern is impossible according to the van't Hoff equation","Temperature has no bearing on the validity of the ideal solubility model"]},
+  {q:"Why might log P be prioritized over solubility-based pKa determination for a poorly water-soluble ionizable compound?",c:["Too little dissolved drug may be available to accurately apply the solubility-based Henderson-Hasselbalch method","Log P measurement always requires less equipment than pKa measurement","pKa cannot be measured for poorly soluble compounds by any method","Solubility-based pKa methods work better for poorly soluble drugs"]},
+  {q:"A weak acid candidate remains below 1 mg/mL total solubility even 2 pH units above its pKa. What preformulation strategy remains viable?",c:["A novel dosage form (e.g., solubilization technology, nanosizing, solid dispersion)","Further pH adjustment alone, since it always eventually works","Switching to a completely different, unrelated molecule with no other rationale","Ignoring the solubility issue, since it will resolve upon manufacturing"]},
+  {q:"How do temperature and pH independently influence a weak acid's aqueous solubility?",c:["Temperature acts via ΔHsol (endothermic drugs dissolve more as temperature rises); pH acts via ionization state (solubility rises above pKa)","Temperature and pH both act through exactly the same mechanism","pH has no effect on solubility for any ionizable drug","Temperature only affects solid dosage forms, not solubility"]},
+  {q:"Using ΔHsol = ΔHf + ΔHmix, why could a drug with a very high melting point still show good aqueous solubility?",c:["A sufficiently negative ΔHmix (favorable solute-solvent interactions) can offset a large positive ΔHf","High melting point always means low ΔHf as compensation","ΔHmix is irrelevant once Tm exceeds 100 °C","Good aqueous solubility is impossible above a melting point of 100 °C"]},
+  {q:"The van't Hoff ideal-solubility equation would need correction if which underlying assumption is violated?",c:["That ΔHmix = 0 (i.e., solute-solvent and solvent-solvent bond energies are unequal in reality)","That ΔHf is measured by DSC","That Tm is expressed in Kelvin","That the drug has a chromophore"]},
+];
+const quizSets = {easy: quizEasy, medium: quizMedium, hard: quizHard};
+
+let quizLevel = 'easy';
+let qOrder = quizSets[quizLevel].map((_,i)=>i);
+let qi = 0;
+let score = 0;
+let answered = [];
+
+function shuffleArr(a){
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+const quizArea = document.getElementById('quizArea');
+const progressFill = document.getElementById('progressFill');
+const quizScoreText = document.getElementById('quizScoreText');
+const quizProgressText = document.getElementById('quizProgressText');
+
+function startQuiz(){
+  const deck = quizSets[quizLevel];
+  qOrder = shuffleArr(deck.map((_,i)=>i));
+  qi = 0; score = 0; answered = new Array(deck.length).fill(false);
+  renderQuestion();
+}
+
+document.querySelectorAll('#quizLevelRow .level-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#quizLevelRow .level-btn').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    quizLevel = btn.dataset.level;
+    startQuiz();
+  });
+});
+
+function renderQuestion(){
+  if(qi >= qOrder.length){ renderDone(); return; }
+  const item = quizSets[quizLevel][qOrder[qi]];
+  const opts = item.c.map((text,i)=>({text, correct:i===0}));
+  shuffleArr(opts);
+  quizProgressText.textContent = `Question ${qi+1} of ${qOrder.length}`;
+  quizScoreText.textContent = `Score: ${score}`;
+  progressFill.style.width = ((qi)/qOrder.length*100) + '%';
+
+  let optsHtml = opts.map((o,i)=>`<button class="opt" data-correct="${o.correct}">${o.text}</button>`).join('');
+  quizArea.innerHTML = `<div class="q-card">
+    <div class="q-num">QUESTION ${qi+1}</div>
+    <h4>${item.q}</h4>
+    <div id="optsWrap">${optsHtml}</div>
+    <div class="quiz-nav">
+      <button id="skipBtn">Skip</button>
+      <button id="nextBtn" class="primary" disabled>Next question</button>
+    </div>
+  </div>`;
+
+  const optButtons = quizArea.querySelectorAll('.opt');
+  optButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      if(btn.disabled) return;
+      optButtons.forEach(b=>b.disabled=true);
+      const isCorrect = btn.dataset.correct === "true";
+      if(isCorrect){ btn.classList.add('correct'); score++; }
+      else{
+        btn.classList.add('incorrect');
+        optButtons.forEach(b=>{ if(b.dataset.correct==="true") b.classList.add('correct'); });
+      }
+      quizScoreText.textContent = `Score: ${score}`;
+      document.getElementById('nextBtn').disabled = false;
+    });
+  });
+  document.getElementById('skipBtn').addEventListener('click', ()=>{ qi++; renderQuestion(); });
+  document.getElementById('nextBtn').addEventListener('click', ()=>{ qi++; renderQuestion(); });
+}
+
+function renderDone(){
+  progressFill.style.width = '100%';
+  quizProgressText.textContent = `Complete`;
+  quizScoreText.textContent = `Score: ${score} / ${qOrder.length}`;
+  quizArea.innerHTML = `<div class="q-card quiz-done">
+    <div class="score-big">${score} / ${qOrder.length}</div>
+    <p style="color:var(--ink-soft); margin-top:10px;">Final score — options are reshuffled on every attempt.</p>
+    <div class="quiz-nav" style="justify-content:center; margin-top:24px;">
+      <button id="restartBtn" class="primary">Restart quiz</button>
+    </div>
+  </div>`;
+  document.getElementById('restartBtn').addEventListener('click', startQuiz);
+}
+
+startQuiz();
+</script>
+</body>
+</html>
